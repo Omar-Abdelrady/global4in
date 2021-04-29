@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ isset($category) ? route('admin.store.category.update', $category->id) : route('admin.store.category.create') }}" method="post">
+                    <form action="{{ isset($category) ? route('admin.store.category.update', $category->id) : route('admin.store.category.store') }}" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="name">الاسم</label>
@@ -13,11 +13,11 @@
                         </div>
                         <div class="form-group">
                             <label for="sub_description">الوصف القصير</label>
-                            <textarea name="sub_description" class="form-control" >{{ isset($category) ? $category->sub_description : null }}</textarea>
+                            <textarea name="sub_description" id="sub_description" PLACEHOLDER="الوصف القصير" class="form-control" >{{ isset($category) ? $category->sub_description : null }}</textarea>
                         </div>
                         <div class="form-group">
-                            <label for="name">الكلمات الدلالية</label>
-                            <textarea name="keywords" class="form-control" >{{ isset($category) ? $category->keywords : null }}</textarea>
+                            <label for="keywords">الكلمات الدلالية</label>
+                            <textarea name="keywords" id="keywords" class="form-control" placeholder="الكلمات الدلالية">{{ isset($category) ? $category->keywords : null }}</textarea>
                         </div>
                         <button class="btn btn-success">{{ isset($category) ? 'تعديل' : 'اضافة' }}</button>
                     </form>

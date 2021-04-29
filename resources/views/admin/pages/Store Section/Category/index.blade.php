@@ -23,10 +23,12 @@
                                 <td>{{$key+1}}</td>
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->sub_description }}</td>
-                                <td class="d-flex"><a href="{{ route('admin.store.category.show', $category->slug) }}" class="btn btn-info mx-1">عرض</a> <a
+                                <td class="d-flex"><a href="{{ route('admin.store.category.show', $category->slug) }}"
+                                                      class="btn btn-info mx-1">عرض</a> <a
                                         href="{{ route('admin.store.category.edit', $category->slug) }}"
                                         class="btn btn-success mx-1">تعديل</a>
-                                    <form action="">
+                                    <form method="post" action="{{ route('admin.store.category.destroy', $category->slug) }}">
+                                        @csrf
                                         <button class="btn btn-danger mx-1">حذف</button>
                                     </form>
                                 </td>

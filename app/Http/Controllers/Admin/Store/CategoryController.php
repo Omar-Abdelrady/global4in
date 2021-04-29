@@ -14,7 +14,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::paginate(10);
+        $categories = Category::latest()->paginate(10);
         return view('admin.pages.Store Section.Category.index', compact('categories'));
     }
 
@@ -54,9 +54,18 @@ class CategoryController extends Controller
         Category::create([
             'name' => $request->name,
             'sub_description' => $request->sub_description,
-            'keywords' => $request->keywords
+            'keywords' => $request->keywords,
+            'slug' => Str::slug($request->name, '-')
         ]);
         session()->flash('success', 'تم إضافة القسم بنجاح');
+        return redirect()->route('admin.store.category');
+    }
+    public function destroy($slug)
+    {
+        $category_id = DB::table('categories')->where('slug', $slug)->first();
+        $category = Category::findOrFail(isset($category_id->id)? $category_id->id: null);
+        $category->delete();
+        session()->flash('success', 'تم حذف القسم بنجاح');
         return redirect()->route('admin.store.category');
     }
 }

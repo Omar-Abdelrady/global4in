@@ -28,12 +28,14 @@ Route::group(['middleware' => 'auth:admin','as' => 'admin', 'name' => 'admin', '
     Route::get('/', ['App\Http\Controllers\Admin\AdminController', 'index'])->name('.index');
 
     Route::group(['as' => '.store.', 'name' => 'admin', 'prefix' => '/store'], function (){
+        Route::get('/', [\App\Http\Controllers\Admin\Store\StoreController::class, 'index'])->name('store.index');
+        Route::get('/categories/create', [\App\Http\Controllers\Admin\Store\CategoryController::class, 'create'])->name('category.create');
+        Route::post('/categories/store', [\App\Http\Controllers\Admin\Store\CategoryController::class, 'store'])->name('category.store');
         Route::get('/categories', [\App\Http\Controllers\Admin\Store\CategoryController::class, 'index'])->name('category');
-        Route::get('/category/{slug}', [\App\Http\Controllers\Admin\Store\CategoryController::class, 'show'])->name('category.show');
-        Route::get('/category/edit/{slug}', [\App\Http\Controllers\Admin\Store\CategoryController::class, 'edit'])->name('category.edit');
-        Route::post('/category/update/{id}', ['App\Http\Controllers\Admin\Store\CategoryController', 'update'])->name('category.update');
-        Route::get('/category/create', [\App\Http\Controllers\Admin\Store\CategoryController::class, 'create'])->name('category.create');
-        Route::post('/category/store', [\App\Http\Controllers\Admin\Store\CategoryController::class, 'store'])->name('category.store');
+        Route::get('/categories/{slug}', [\App\Http\Controllers\Admin\Store\CategoryController::class, 'show'])->name('category.show');
+        Route::get('/categories/edit/{slug}', [\App\Http\Controllers\Admin\Store\CategoryController::class, 'edit'])->name('category.edit');
+        Route::post('/categories/update/{id}', ['App\Http\Controllers\Admin\Store\CategoryController', 'update'])->name('category.update');
+        Route::post('categories/delete/{slug}', [\App\Http\Controllers\Admin\Store\CategoryController::class, 'destroy'])->name('category.destroy');
     });
 });
 
