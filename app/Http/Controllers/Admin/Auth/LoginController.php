@@ -11,7 +11,7 @@ class LoginController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest:admin');
+        $this->middleware('guest:admin')->except('logout');
     }
 
     public function login()
@@ -35,5 +35,11 @@ class LoginController extends Controller
         }else{
             dd('no');
         }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('admin.login');
     }
 }

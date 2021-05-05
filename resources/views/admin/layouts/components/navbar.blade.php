@@ -7,7 +7,9 @@
         </li>
     </ul>
     <div class="mr-auto-navbav">
-        <a href="#" class="mr-auto ml-0">Logout</a>
+        <a href="{{ route('adminadmin.logout') }}" class="mr-auto ml-0 btn btn-light text-danger">
+            Logout
+        </a>
     </div>
 
 </nav>

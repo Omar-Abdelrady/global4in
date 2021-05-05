@@ -16,7 +16,7 @@
 <!-- Sparkline -->
 <script src="{{ asset('assets/admin-assets/plugins/sparklines/sparkline.js') }}"></script>
 <!-- JQVMap -->
-<script src="{{ asset('assets/admin-assets/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
+{{--<script src="{{ asset('assets/admin-assets/plugins/jqvmap/jquery.vmap.min.js') }}"></script>--}}
 <script src="{{ asset('assets/admin-assets/plugins/jqvmap/maps/jquery.vmap.world.js') }}"></script>
 <!-- jQuery Knob Chart -->
 <script src="{{ asset('assets/admin-assets/plugins/jquery-knob/jquery.knob.min.js') }}"></script>

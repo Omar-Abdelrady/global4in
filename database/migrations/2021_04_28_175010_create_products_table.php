@@ -18,6 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->longText('sub_description');
             $table->longText('description');
+            $table->float('price');
+            $table->integer('discount');
             $table->longText('keywords');
             $table->string('slug');
             $table->unsignedBigInteger('category_id');

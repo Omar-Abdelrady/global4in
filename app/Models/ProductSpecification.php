@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductSize extends Model
+class ProductSpecification extends Model
 {
     use HasFactory;
     protected $guarded;
-    public function products()
+
+    public function product()
     {
-        return $this->belongsToMany(Product::class, 'pivot_product_sizes', 'product_id', 'size_id');
+        return $this->belongsTo(Product::class);
     }
 }

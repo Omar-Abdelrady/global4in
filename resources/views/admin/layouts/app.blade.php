@@ -34,5 +34,6 @@
 </div>
 
 @include('admin.layouts.components.scripts')
+@yield('js_code')
 </body>
 </html>
