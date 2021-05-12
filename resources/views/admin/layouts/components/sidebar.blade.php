@@ -67,7 +67,12 @@
                             </a>
                         </li>
                     </ul>
-
+                <li class="nav-item">
+                    <a href="{{ route('adminprofile.index') }}" class="nav-link">
+                        <i class="fas fa-user  nav-icon"></i>
+                        الملف الشخصي
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

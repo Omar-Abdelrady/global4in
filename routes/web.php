@@ -43,6 +43,11 @@ Route::group(['middleware' => 'auth:admin', 'as' => 'admin', 'name' => 'admin', 
         Route::resource('products', \App\Http\Controllers\Admin\Store\ProductController::class)->parameters(['products' => 'slug']);
     });
 
+    Route::group(['as' => 'profile', 'prefix' => 'profile', 'name' => 'profile'], function (){
+       Route::get('/index', [\App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('.index');
+       Route::get('/edit/', [\App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('.edit');
+    });
+
     Route::get('admin/logout', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'logout'])->name('admin.logout');
 });
 
