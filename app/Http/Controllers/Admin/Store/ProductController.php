@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Store;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Store\CreateProductsRequest;
-use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\Admin\Store\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\PivotProductColor;
 use App\Models\PivotProductSize;
@@ -59,7 +59,9 @@ class ProductController extends Controller
             'description' => $request->description,
             'keywords' => $request->keywords,
             'slug' => Str::slug($request->name, '-'),
-            'category_id' => $request->category
+            'category_id' => $request->category,
+            'price' => $request->price,
+            'discount' => $request->discount,
         ]);
         $product->sizes()->sync($request->sizes);
         $product->colors()->sync($request->colors);
@@ -74,13 +76,25 @@ class ProductController extends Controller
         }
 
         foreach ($request->images as $image) {
-            $fileName = $image->getClientOriginalName();
-            $image_resize = Image::make($image->getRealPath());
-            $image_resize->resize(350, 350);
             $time = time();
-            $file = $image_resize->save(public_path('storage/Images/Product-Images/' . $time . $fileName));
+            $fileName = $image->getClientOriginalName();
+
+            $image_original = Image::make($image->getRealPath());
+            $image_original->resize(500, 500);
+            $image_original->save(public_path('storage/Images/Product-Images/' . $time . $fileName));
+
+            $image_medium = Image::make($image->getRealPath());
+            $image_medium->resize(350, 350);
+            $image_medium->save(public_path('storage/Images/Product-Images/' . $time . 'medium' . $fileName));
+
+            $image_avatar = Image::make($image->getRealPath());
+            $image_avatar->resize('100', '100');
+            $image_avatar->save(public_path('storage/Images/Product-Images/' . $time . 'avatar' . $fileName));
+
             ProductPhoto::create([
                 'image' => 'Images/Product-Images/' . $time . $fileName,
+                'image_medium' => 'Images/Product-Images/' . $time . 'medium' . $fileName,
+                'image_avatar' => 'Images/Product-Images/' . $time . 'avatar' . $fileName,
                 'product_id' => $product->id
             ]);
         }
@@ -126,6 +140,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, $slug)
     {
+//        dd('asd');
         $id = DB::table('products')->where('slug', $slug)->first();
         $product = Product::FindOrFail(isset($id) ? $id->id : null);
         $product->name = $request->name;
@@ -134,6 +149,9 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->keywords = $request->keywords;
         $product->category_id = $request->category;
+
+        $product->price = $request->price;
+        $product->discount = $request->discount;
         $product->colors()->sync($request->colors);
         $product->sizes()->sync($request->sizes);
         $product->specifications()->delete();
@@ -146,19 +164,33 @@ class ProductController extends Controller
                 ]);
             }
         }
-        if ($request->has('images'))
-        {
+        if ($request->has('images')) {
             foreach ($product->photos as $photo) {
                 Storage::delete('/public/' . $photo->image);
+                Storage::delete('/public/' . $photo->image_medium);
+                Storage::delete('/public/' . $photo->image_avatar);
             }
+            $product->photos()->delete();
             foreach ($request->images as $image) {
-                $fileName = $image->getClientOriginalName();
-                $image_resize = Image::make($image->getRealPath());
-                $image_resize->resize(350, 350);
                 $time = time();
-                $file = $image_resize->save(public_path('storage/Images/Product-Images/' . $time . $fileName));
+                $fileName = $image->getClientOriginalName();
+
+                $image_original = Image::make($image->getRealPath());
+                $image_original->resize(500, 500);
+                $image_original->save(public_path('storage/Images/Product-Images/' . $time . $fileName));
+
+                $image_medium = Image::make($image->getRealPath());
+                $image_medium->resize(350, 350);
+                $image_medium->save(public_path('storage/Images/Product-Images/' . $time . 'medium' . $fileName));
+
+                $image_avatar = Image::make($image->getRealPath());
+                $image_avatar->resize('100', '100');
+                $image_avatar->save(public_path('storage/Images/Product-Images/' . $time . 'avatar' . $fileName));
+
                 ProductPhoto::create([
                     'image' => 'Images/Product-Images/' . $time . $fileName,
+                    'image_medium' => 'Images/Product-Images/' . $time . 'medium' . $fileName,
+                    'image_avatar' => 'Images/Product-Images/' . $time . 'avatar' . $fileName,
                     'product_id' => $product->id
                 ]);
             }
@@ -180,6 +212,8 @@ class ProductController extends Controller
         $product = Product::FindOrFail(isset($id) ? $id->id : null);
         foreach ($product->photos as $photo) {
             Storage::delete('/public/' . $photo->image);
+            Storage::delete('/public/' . $photo->image_medium);
+            Storage::delete('/public/' . $photo->image_avatar);
         }
         $product->delete();
         return redirect()->back();

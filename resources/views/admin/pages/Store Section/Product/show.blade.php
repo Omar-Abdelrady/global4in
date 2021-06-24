@@ -16,11 +16,11 @@
                             <div class="p-2">
                                 <h4>صور المنتج</h4>
                                 <div class="row">
-                                    @foreach($product->photos as $image)
+                                    @foreach($product->photos  as $image)
                                         <div class="col-md-3">
                                             <div class="p-2">
                                                 <img class="img-fluid rounded"
-                                                     src="{{ asset('storage/'. $image->image) }}" alt="">
+                                                     src="{{ asset('storage/'. $image->image_avatar) }}" alt="">
                                             </div>
                                         </div>
                                     @endforeach

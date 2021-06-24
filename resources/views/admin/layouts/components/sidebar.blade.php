@@ -68,7 +68,13 @@
                         </li>
                     </ul>
                 <li class="nav-item">
-                    <a href="{{ route('adminprofile.index') }}" class="nav-link">
+                    <a href="{{ route('admin.service.index') }}" class="nav-link">
+                        <i class="fas fa-star nav-icon"></i>
+                        <p>خدمات</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.profile.index') }}" class="nav-link">
                         <i class="fas fa-user  nav-icon"></i>
                         الملف الشخصي
                     </a>

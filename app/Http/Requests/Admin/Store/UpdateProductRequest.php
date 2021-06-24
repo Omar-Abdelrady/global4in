@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin\Store;
 
 use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
@@ -9,6 +9,21 @@ use Illuminate\Support\Facades\Request;
 
 class UpdateProductRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
     public function rules()
     {
         $id = DB::table('products')->where('slug', $this->slug)->first();
@@ -55,10 +70,5 @@ class UpdateProductRequest extends FormRequest
             'sizes.required' => 'عفوا حجم المنتج مطلوب',
             'colors.required' => 'عفوا لون المنتج مطلوب'
         );
-    }
-
-    public function authorize()
-    {
-        return true;
     }
 }

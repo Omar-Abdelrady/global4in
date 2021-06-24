@@ -26,10 +26,10 @@ Route::group(['middleware' => 'auth:web'], function () {
     });
 });
 
-Route::group(['middleware' => 'auth:admin', 'as' => 'admin', 'name' => 'admin', 'prefix' => 'admin'], function () {
-    Route::get('/', ['App\Http\Controllers\Admin\AdminController', 'index'])->name('.index');
+Route::group(['middleware' => 'auth:admin', 'as' => 'admin.', 'name' => 'admin', 'prefix' => 'admin'], function () {
+    Route::get('/', ['App\Http\Controllers\Admin\AdminController', 'index'])->name('index');
 
-    Route::group(['as' => '.store.', 'name' => 'admin', 'prefix' => '/store'], function () {
+    Route::group(['as' => 'store.', 'name' => 'admin', 'prefix' => '/store'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\Store\StoreController::class, 'index'])->name('store.index');
         Route::get('/categories/create', [\App\Http\Controllers\Admin\Store\CategoryController::class, 'create'])->name('category.create');
         Route::post('/categories/store', [\App\Http\Controllers\Admin\Store\CategoryController::class, 'store'])->name('category.store');
@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth:admin', 'as' => 'admin', 'name' => 'admin', 
         Route::resource('colors', \App\Http\Controllers\Admin\Store\ColorController::class)->parameters(['colors' => 'id']);
         Route::resource('products', \App\Http\Controllers\Admin\Store\ProductController::class)->parameters(['products' => 'slug']);
     });
+
+    Route::resource('/service', \App\Http\Controllers\Admin\ServiceController::class)->parameters(['service' => 'slug']);
 
     Route::group(['as' => 'profile', 'prefix' => 'profile', 'name' => 'profile'], function (){
        Route::get('/index', [\App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('.index');

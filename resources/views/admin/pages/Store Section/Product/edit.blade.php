@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ route('admin.store.products.update', $product->slug) }}" enctype="multipart/form-data"
+                    <form action="{{ route('admin.store.products.update', $product->slug) }}"
+                          enctype="multipart/form-data"
                           method="post">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label for="images">اختر مجموعة من الصور</label>
                             <div class="row">
                                 @foreach($product->photos as $image)
                                     <div class="col-md-3">
@@ -23,6 +23,7 @@
                                     </div>
                                 @endforeach
                             </div>
+                            <label for="images">اختر مجموعة من الصور</label>
                             <input type="file" class="form-control-file" name="images[]" id="images" multiple>
                         </div>
                         <div class="form-group images-content">
@@ -34,6 +35,17 @@
                                    placeholder="اسم المنتج">
                         </div>
                         <div class="form-group">
+                            <label for="price">سعر المنتج</label>
+                            <input type="number" value="{{ $product->price }}" class="form-control" name="price"
+                                   placeholder="سعر المنتج">
+                        </div>
+                        <div class="form-group">
+                            <label for="discount">الخصم</label>
+                            <input type="number" value="{{ $product->discount }}" class="form-control discount"
+                                   name="discount"
+                                   placeholder="الخصم">
+                        </div>
+                        <div class="form-group">
                             <label for="category">القسم</label>
                             <select class="form-control" name="category">
                                 <option value="">أختر قسم المنتج</option>
@@ -43,7 +55,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        f
                         <div class="form-group">
                             <label for="sub_description">الوصف القصير</label>
                             <textarea class="form-control" name="sub_description" id="sub_description" rows="5"
@@ -82,15 +93,18 @@
                             <div class="specification-content">
                                 @if($product->specifications)
                                     @foreach($product->specifications as $key => $item)
-                                        <div>
-                                            <label for="">العنوان</label>
-                                            <input type="text" name="specification_key[]"
-                                                   value="{{ $item->name }}" class="form-control">
-
-                                            <label for="">القيمة</label>
-                                            <input type="text" class="form-control" name="specification_value[]"
-                                                   value="{{ $item->body }}">
-                                            <i class="fa fa-inverse specification-clear">clear</i>
+                                        <div class="my-2 position-relative">
+                                            <div class="form-group">
+                                                <label for="">العنوان</label>
+                                                <input type="text" name="specification_key[]"
+                                                       value="{{ $item->name }}" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">القيمة</label>
+                                                <input type="text" class="form-control" name="specification_value[]"
+                                                       value="{{ $item->body }}">
+                                            </div>
+                                            <i class="fas fa-times specification-clear text-danger"></i>
                                         </div>
                                     @endforeach
                                 @endif
@@ -111,14 +125,17 @@
             $(document).on('click', '.add-specification', function () {
                 let uiInputs =
                     `
-                        <div>
+                    <div class="position-relative">
+                        <div class="form-group">
                             <label for="">العنوان</label>
                             <input type="text" name="specification_key[]" class="form-control">
-
-                            <label for="">القيمة</label>
-<input type="text" class="form-control" name="specification_value[]">
-<i class="fa fa-inverse specification-clear">clear</i>
                         </div>
+                       <div class="form-group">
+                            <label for="">القيمة</label>
+                            <input type="text" class="form-control" name="specification_value[]">
+                       </div>
+                        <i class="fas fa-times specification-clear text-danger"></i>
+                    </div>
 <hr>
                     `;
                 let content = $('.specification-content')
@@ -130,20 +147,61 @@
                 $(this).parent('div').hide('slow');
                 $(this).parent('div').remove();
             })
-            $('#images').change(function () {
-                console.log(this.files.length)
-                let reader = new FileReader();
-                let imageContent = $('.images-content');
-                for (let i = 0; i < this.files.length; i++) {
-                    reader.onload = function (e) {
-                        imageContent.append(
-                            `
-                            <img src="${e.target.result}" width="50" class="img-fluid"/>
-                        `
-                        )
+            $("#images").on('change', function () {
+                //Get count of selected files
+                var countFiles = $(this)[0].files.length;
+                var imgPath = $(this)[0].value;
+                var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+                var image_holder = $(".images-content");
+                image_holder.empty();
+                if (countFiles > 4) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'يجب اختيار 4 صور ك اقصى حد!',
+                    })
+                    this.value = '';
+                    return false;
+                } else if (countFiles < 2) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'يجب ان اختيار صورتين علي الاقل',
+                    })
+                    this.value = '';
+                    return false;
+                }
+                if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                    if (typeof (FileReader) != "undefined") {
+                        //loop for each file selected for uploaded.
+                        for (var i = 0; i < countFiles; i++) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                $("<img />", {
+                                    "src": e.target.result,
+                                    "class": "thumb-image img-fluid m-2 rounded",
+                                    'width': '200'
+                                }).appendTo(image_holder);
+                            }
+                            image_holder.show();
+                            reader.readAsDataURL($(this)[0].files[i]);
+                        }
+                    } else {
+                        alert("This browser does not support FileReader.");
                     }
-                    reader.readAsDataURL(this.files[i])
-                    reader.DONE
+                } else {
+                    alert("Pls select only images");
+                }
+            });
+
+            $('.discount').on('input', function () {
+                if (this.value > 100) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'لا يجب ان يكون الخصم اكثر من 100%',
+                    })
+                    this.value = '';
                 }
             })
         })
