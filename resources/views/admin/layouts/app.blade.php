@@ -2,6 +2,8 @@
 <html>
 <head>
     @include('admin.layouts.components.head')
+    @yield('meta')
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

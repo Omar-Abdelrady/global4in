@@ -42,14 +42,14 @@ class ServiceController extends Controller
     {
         $file_name = $request->image->getClientOriginalName();
         $image = Image::make($request->image->getRealPath());
-        $image->resize(64,64);
-        $image->save(public_path('storage/Images/Services/'.time().$file_name));
+        $image->resize(64, 64);
+        $image->save(public_path('storage/Images/Services/' . time() . $file_name));
         Service::create([
             'name' => $request->name,
             'short_description' => $request->short_description,
             'description' => $request->description,
             'keywords' => $request->keywords,
-            'logo' => 'storage/Images/Services/'.time().$file_name,
+            'logo' => 'storage/Images/Services/' . time() . $file_name,
             'slug' => \Str::slug($request->name)
         ]);
         session()->flash('success', 'تم اضافة الخدمة بنجاح');
@@ -65,7 +65,7 @@ class ServiceController extends Controller
     public function show($slug)
     {
         $service = DB::table('services')->where('slug', $slug)->first();
-        return view();
+        return view('admin.pages.Services Section.show', compact('service'));
     }
 
     /**

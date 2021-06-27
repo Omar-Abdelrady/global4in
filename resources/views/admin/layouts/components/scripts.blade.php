@@ -20,6 +20,7 @@
 <script src="{{ asset('assets/admin-assets/plugins/jqvmap/maps/jquery.vmap.world.js') }}"></script>
 <!-- jQuery Knob Chart -->
 <script src="{{ asset('assets/admin-assets/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
+
 <!-- daterangepicker -->
 <script src="{{ asset('assets/admin-assets/plugins/moment/moment.min.js') }}"></script>
 <script src="{{ asset('assets/admin-assets/plugins/daterangepicker/daterangepicker.js') }}"></script>

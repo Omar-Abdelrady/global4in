@@ -27,12 +27,27 @@
                         </div>
                         <div class="form-group">
                             <label for="description">الوصف</label>
-                            <textarea class="form-control" name="description" id="description" rows="3" placeholder="الوصف"></textarea>
-                        </div>
+                            <div class="card-body pad">
+                                <div class="mb-3">
+                                  <textarea class="textarea" placeholder="Place some text here"
+                                            style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                </div>
+                              </div>                        </div>
                         <button type="submit" class="btn btn-primary mb-3">اضافة</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('js_code')
+
+    <script>
+        $(document).ready(function () {
+            $('.textarea').summernote({
+                lang: 'AR-ar'
+            })
+        })
+    </script>
 @endsection

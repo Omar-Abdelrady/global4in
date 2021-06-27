@@ -11,6 +11,7 @@
             <div class="row justify-content-center align-content-center h-100">
                 <div class="col-6">
                     @include('admin.components.errors')
+                    @include('admin.components.flash session')
                     <form class="form-horizontal my-3" action="{{ route('admin.login.submit') }}" method="post">
                         @csrf
                         <div class="card-body">

@@ -33,7 +33,8 @@ class LoginController extends Controller
                 return redirect()->route('admin.index');
             }
         }else{
-            dd('no');
+            session()->flash('error', 'عذرا يجب كتابة البريد الالكتروني وكلمة السر بشكل صحيح');
+            return back();
         }
     }
 
