@@ -12,7 +12,7 @@
                 <div class="col-6">
                     @include('admin.components.errors')
                     @include('admin.components.flash session')
-                    <form class="form-horizontal my-3" action="{{ route('admin.login.submit') }}" method="post">
+                    <form class="form-horizontal my-3" action="{{ route('admin.submit') }}" method="post">
                         @csrf
                         <div class="card-body">
                             <div class="form-group row">

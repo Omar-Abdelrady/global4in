@@ -27,14 +27,16 @@ class LoginController extends Controller
         ]);
         $admin = DB::table('admins')->where('email', $data['email'])->first();
         if ($admin){
-            if ( Auth::guard('admin')->attempt($data) )
+            if ( Auth::guard('admin')->attempt($data, $request->has('remember') ? true : null))
             {
-                return redirect()->route('admin.index');
+                return redirect(route('admin.index'));
+            }else{
+                session()->flash('error', 'عذرا يجب كتابة كلمة السر بشكل صحيح');
+                return redirect()->back();
             }
         }else{
-            dd('asd');
             session()->flash('error', 'عذرا يجب كتابة البريد الالكتروني وكلمة السر بشكل صحيح');
-            return back();
+            return redirect()->back();
         }
     }
 

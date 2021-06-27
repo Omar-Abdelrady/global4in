@@ -54,4 +54,4 @@ Route::group(['middleware' => 'auth:admin', 'as' => 'admin.', 'name' => 'admin',
 });
 
 Route::get('admin/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'login'])->name('admin.login');
-Route::post('admin/login/submit', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'submit'])->name('admin.login.submit');
+Route::post('admin/login/submit', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'submit'])->name('admin.submit');
