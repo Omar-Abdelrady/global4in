@@ -27,6 +27,18 @@
                                 </div>
                             </div>
                             <div class="p-2">
+                                <h4>سعر المنتج</h4>
+                                <p class="text-gray">{{ $product->price }}</p>
+                            </div>
+                            <div class="p-2">
+                                <h4>الخصم</h4>
+                                <p class="text-gray">{{ $product->discount }}</p>
+                            </div>
+                            <div class="p-2">
+                                <h4>لبسعر بعد الخصم</h4>
+                                <p class="text-gray">{{ $product->price - ( $product->price * ($product->discount / 100) ) }}</p>
+                            </div>
+                            <div class="p-2">
                                 <h4>قسم المنتج</h4>
                                 <p class="text-gray">{{ \App\Models\Category::find($product->category_id)->name }}</p>
                             </div>

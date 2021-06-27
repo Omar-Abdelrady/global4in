@@ -61,7 +61,7 @@ class ProductController extends Controller
             'slug' => Str::slug($request->name, '-'),
             'category_id' => $request->category,
             'price' => $request->price,
-            'discount' => $request->discount,
+            'discount' => $request->discount ? $request->discount : 0,
         ]);
         $product->sizes()->sync($request->sizes);
         $product->colors()->sync($request->colors);
@@ -151,7 +151,7 @@ class ProductController extends Controller
         $product->category_id = $request->category;
 
         $product->price = $request->price;
-        $product->discount = $request->discount;
+        $product->discount = $request->discount ? $request->discount : 0;
         $product->colors()->sync($request->colors);
         $product->sizes()->sync($request->sizes);
         $product->specifications()->delete();
