@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateServiceRequest;
+use App\Http\Requests\Admin\UpdateServiceRequest;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class ServiceController extends Controller
@@ -49,7 +51,7 @@ class ServiceController extends Controller
             'short_description' => $request->short_description,
             'description' => $request->description,
             'keywords' => $request->keywords,
-            'logo' => 'storage/Images/Services/' . time() . $file_name,
+            'logo' => 'Images/Services/' . time() . $file_name,
             'slug' => \Str::slug($request->name)
         ]);
         session()->flash('success', 'تم اضافة الخدمة بنجاح');
@@ -74,9 +76,10 @@ class ServiceController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        $service = DB::table('services')->where('slug', $slug)->first();
+        return view('admin.pages.Services Section.edit', compact('service'));
     }
 
     /**
@@ -86,9 +89,27 @@ class ServiceController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateServiceRequest $request, $slug)
     {
-        //
+        $service_id = DB::table('services')->where('slug', $slug)->first();
+        $service = Service::findOrFail($service_id->id ? $service_id->id : null);
+        $service->name = $request->name;
+        $service->short_description = $request->short_description;
+        $service->description = $request->description;
+        $service->keywords = $request->keywords;
+        if ($request->has('image'))
+        {
+            Storage::delete('/public/' . $service->logo);
+            $file_name = $request->image->getClientOriginalName();
+            $image = Image::make($request->image->getRealPath());
+            $image->resize(64, 64);
+            $image->save(public_path('storage/Images/Services/' . time() . $file_name));
+            $service->logo = 'Images/Services/' . time() . $file_name;
+        }
+        $service->save();
+        session()->flash('success', 'تم تعديل بيانات الخدمة بنجاح');
+        return redirect()->route('admin.service.index');
+
     }
 
     /**
@@ -99,6 +120,10 @@ class ServiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $service = Service::findOrFail($id);
+        Storage::delete('/public/' . $service->logo);
+        $service->delete();
+        session()->flash('success', 'تم حذف الخدمة بنجاح');
+        return back();
     }
 }

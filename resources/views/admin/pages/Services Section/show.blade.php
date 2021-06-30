@@ -18,7 +18,7 @@
                             <div class="p-2 ">
                                 <h4>الصورة الخاصة بالخدمة</h4>
                                 <p class="text-gray">
-                                    <img src="{{ asset($service->logo) }}" alt="" class="img-fluid">
+                                    <img src="{{ asset('storage/'.$service->logo) }}" alt="" class="img-fluid">
                                 </p>
                             </div>
                             <div class="p-2 ">
@@ -36,10 +36,10 @@
                             <div class="p-2 ">
                                 <h4>وصف الخدمة</h4>
                                 <p class="text-gray">
-                                    {{ $service->description }}
+                                    {!! $service->description !!}
                                 </p>
                             </div>
-
+                            <a href="{{ url()->previous() }}" class="btn btn-dark my-3">رجوع</a>
                         </div>
                     </div>
                 </div>

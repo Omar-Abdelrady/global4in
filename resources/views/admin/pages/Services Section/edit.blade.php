@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'اضافة قسم')
+@section('title', 'تعديل')
 
 @section('meta')
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
@@ -22,37 +22,41 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ route('admin.service.store') }}" enctype="multipart/form-data" method="post">
+                    <form action="{{ route('admin.service.update', $service->slug) }}" enctype="multipart/form-data"
+                          method="post">
                         @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label for="name">اسم الخدمة</label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="اسم الخدمة">
+                            <input type="text" name="name" id="name" value="{{ $service->name }}" class="form-control"
+                                   placeholder="اسم الخدمة">
                         </div>
                         <div class="form-group">
                             <label for="image">الصورة</label>
                             <input type="file" name="image" id="image" class="form-control-file"
                                    placeholder="صورة الخدمة">
+                            <img src="{{ asset('storage/'.$service->logo) }}" class="img-fluid my-3" width="250" alt="">
                         </div>
                         <div class="form-group">
                             <label for="short_description">الوصف القصير</label>
                             <textarea class="form-control" name="short_description" id="short_description" rows="3"
-                                      placeholder="الوصف القصير"></textarea>
+                                      placeholder="الوصف القصير">{{ $service->short_description }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="keywords">الكلمات الدلالية</label>
                             <textarea class="form-control" name="keywords" id="keywords" rows="3"
-                                      placeholder="الكلمات الدلالية"></textarea>
+                                      placeholder="الكلمات الدلالية">{{ $service->keywords }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="description">الوصف</label>
                             <div class="card-body pad">
                                 <div class="mb-3">
                                   <textarea class="textarea" placeholder="Place some text here"
-                                            name="description"></textarea>
+                                            name="description">{{ $service->description }}</textarea>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary mb-3">اضافة</button>
+                        <button type="submit" class="btn btn-primary mb-3">تعديل</button>
                     </form>
                 </div>
             </div>

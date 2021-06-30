@@ -28,6 +28,8 @@
 <script src="{{ asset('assets/admin-assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 <!-- Summernote -->
 <script src="{{ asset('assets/admin-assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
+
+<script src="{{ asset('assets/admin-assets/plugins/summernote/summernote-rtl-plugin/summernote-ext-rtl.js') }}"></script>
 <!-- overlayScrollbars -->
 <script src="{{ asset('assets/admin-assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <!-- AdminLTE App -->

@@ -31,7 +31,7 @@
                                         class="btn btn-success mx-1">تعديل</a>
                                     <a href="{{ route('admin.service.show', $item->slug) }}" class="btn btn-info">عرض</a>
                                     <form method="post"
-                                          action="{{ route('admin.service.destroy', $item->slug) }}">
+                                          action="{{ route('admin.service.destroy', $item->id) }}">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger mx-1">حذف</button>
