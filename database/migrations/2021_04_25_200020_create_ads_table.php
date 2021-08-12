@@ -15,6 +15,15 @@ class CreateAdsTable extends Migration
     {
         Schema::create('ads', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('advertiser_name');
+            $table->longText('description');
+
+
+
+            $table->integer('advertiser_number');
+            $table->integer('advertiser_email');
+
             $table->timestamps();
         });
     }

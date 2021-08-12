@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'website.index')->name('index');
+Route::get('/register', [\App\Http\Controllers\Web\Auth\RegisterController::class, 'register'])->name('register.index');
+Route::post('/register', [\App\Http\Controllers\Web\Auth\RegisterController::class, 'submit'])->name('register.submit');
+Route::get('/login', [\App\Http\Controllers\Web\Auth\LoginController::class, 'login'])->name('login.index');
+Route::post('/login', [\App\Http\Controllers\Web\Auth\LoginController::class, 'submit'])->name('login.submit');
+
 Route::get('/admin', function () {
     return view('admin.index');
 });

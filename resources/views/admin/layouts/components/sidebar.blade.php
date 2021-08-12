@@ -68,7 +68,7 @@
                         </li>
                     </ul>
                 <li class="nav-item">
-                    <a href="{{ route('admin.service.index') }}" class="nav-link">
+                    <a href="{{ route('admin.service.index') }}" class="nav-link {{ Route::is('admin.service.*') ? 'active' : null }} ">
                         <i class="fas fa-star nav-icon"></i>
                         <p>خدمات</p>
                     </a>
