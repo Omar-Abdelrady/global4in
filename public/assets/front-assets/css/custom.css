@@ -8,6 +8,19 @@
 .product-badge .fa-heart{
     font-size: 17px;
 }
+.disount-class {
+    height: 50px;
+    width: 50px;
+    border: 1px solid #FF5A3C;
+    border-radius: 50%;
+    font-size: 18px;
+    padding: 6px;
+    font-weight: 700;
+}
+.text-line-through {
+    text-decoration-line: line-through;
+    color: #605f5f !important;
+}
 /*End Costume Class style*/
 
 /*Start Services Section*/

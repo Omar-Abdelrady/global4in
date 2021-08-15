@@ -18,6 +18,13 @@ Route::get('/register', [\App\Http\Controllers\Web\Auth\RegisterController::clas
 Route::post('/register', [\App\Http\Controllers\Web\Auth\RegisterController::class, 'submit'])->name('register.submit');
 Route::get('/login', [\App\Http\Controllers\Web\Auth\LoginController::class, 'login'])->name('login.index');
 Route::post('/login', [\App\Http\Controllers\Web\Auth\LoginController::class, 'submit'])->name('login.submit');
+Route::get('/store', [\App\Http\Controllers\Web\Store\StoreController::class, 'index'])->name('store.index');
+Route::get('/store/category/{slug}', [\App\Http\Controllers\Web\Store\StoreController::class, 'category'])->name('store.category');
+Route::get('store/product/{slug}', [\App\Http\Controllers\Web\Store\ProductController::class, 'index'])->name('product.index');
+Route::group(['middleware' => 'web'], function (){
+    Route::get('/my-cart', [\App\Http\Controllers\Web\Store\CartController::class, 'index'])->name('cart.index');
+    Route::post('/my-cart/add/{slug}', [\App\Http\Controllers\Web\Store\CartController::class, 'add'])->name('cart.add');
+});
 
 Route::get('/admin', function () {
     return view('admin.index');

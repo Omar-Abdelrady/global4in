@@ -19,7 +19,7 @@
 >>> TABLE OF CONTENTS:
 ===============================================================
 # Google fonts
-# Gutter Code 
+# Gutter Code
 # Normalize
 # Typography
 # Custom Class
@@ -38,7 +38,7 @@
 # Galleries
 # Unit test
 # ScrollUp
-# Owl Carousel 
+# Owl Carousel
 # Slick Slider
 # Background Overlay
 # Scrollbar
@@ -3920,7 +3920,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 ---------------------------------------------------- */
 .ltn__breadcrumb-area {
     background-color: var(--section-bg-1);
-    margin-bottom: 120px;
+    margin-bottom: 40px;
     padding-top: 110px;
     padding-bottom: 110px;
 }
@@ -18983,7 +18983,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   Modifications by Omar Abdelrady for all of style
 */
 
-div, p, span, h1, h2, h3, h4, h5, h6, strong, a, input {
+div, p, span, h1, h2, h3, h4, h5, h6, strong, a, input, select {
     font-family: 'Tajawal', sans-serif !important;;
 }
 

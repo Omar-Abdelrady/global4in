@@ -48,10 +48,12 @@
                         <div class="form-group">
                             <label for="category">القسم</label>
                             <select class="form-control" name="category">
+
                                 <option value="">أختر قسم المنتج</option>
+
                                 @foreach($categories as $category)
                                     <option
-                                        value="{{$category->id}}" {{ $product->category->id == $category->id ?: 'selected' }}>{{$category->name}}</option>
+                                        value="{{$category->id}}" {{ $product->category->id === $category->id ? 'selected' : null }}>{{$category->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -72,7 +74,7 @@
                         </div>
                         <div class="form-group">
                             <label for="colors">الوان المنتج</label>
-                            <select class="form-control" name="colors[]" multiple>
+                            <select class="form-control select2-selection" name="colors[]" multiple>
                                 @foreach($colors as $key => $color)
                                     <option
                                         {{ $product->hasColor($color->id) ? 'selected' : null }} value="{{ $color->id }}">{{ $color->name }}</option>
@@ -81,7 +83,7 @@
                         </div>
                         <div class="form-group">
                             <label for="sizes">حجم المنتج</label>
-                            <select class="form-control" name="sizes[]" multiple>
+                            <select class="form-control select2-selection" name="sizes[]" multiple>
                                 @foreach($sizes as $key => $size)
                                     <option
                                         {{ $product->hasSize($size->id) ? 'selected' : null }} value="{{ $size->id }}">{{ $size->name }}</option>
@@ -121,8 +123,13 @@
 
 @section('js_code')
     <script>
+
         $(function () {
-            $(document).on('click', '.add-specification', function () {
+            $(".select2-selection").select2({
+                allowClear: true
+            });
+            $(document).on('click', '.add-specification', function (e) {
+                e.preventDefault();
                 let uiInputs =
                     `
                     <div class="position-relative">
@@ -141,6 +148,8 @@
                 let content = $('.specification-content')
 
                 content.append(uiInputs).hide().show('slow');
+                e.preventDefault();
+                return false;
             })
 
             $(document).on('click', '.specification-clear', function () {

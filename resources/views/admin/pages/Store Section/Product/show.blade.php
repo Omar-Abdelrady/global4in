@@ -35,7 +35,7 @@
                                 <p class="text-gray">{{ $product->discount }}</p>
                             </div>
                             <div class="p-2">
-                                <h4>لبسعر بعد الخصم</h4>
+                                <h4>السعر بعد الخصم</h4>
                                 <p class="text-gray">{{ $product->price - ( $product->price * ($product->discount / 100) ) }}</p>
                             </div>
                             <div class="p-2">

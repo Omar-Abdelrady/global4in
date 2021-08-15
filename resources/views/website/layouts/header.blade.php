@@ -49,7 +49,8 @@
                 <div class="col">
                     <div class="site-logo-wrap">
                         <div class="site-logo">
-                            <a href="index.html"><img src="{{ asset('assets/front-assets/img/logo-2.png') }}" alt="Logo"></a>
+                            <a href="index.html"><img src="{{ asset('assets/front-assets/img/logo-2.png') }}"
+                                                      alt="Logo"></a>
                         </div>
                         <div class="get-support clearfix d-none">
                             <div class="get-support-icon">
@@ -79,6 +80,8 @@
                             </li>
                             <li class=" mega-menu-parent"><a href="#">عقارات</a>
                             </li>
+                            <li class=" mega-menu-parent"><a href="{{ route('store.index') }}">منتجاتنا</a>
+                            </li>
                             <li><a href="contact.html">اتصل بنا</a></li>
 
                         </ul>
@@ -91,8 +94,12 @@
                             <li>
                                 <a href="#"><i class="icon-user"></i></a>
                                 <ul>
-                                    <li><a href="login.html">تسجيل دخول</a></li>
-                                    <li><a href="{{ route('register.index') }}">التسجيل</a></li>
+                                    @if(auth()->check())
+                                        <li><a >{{ auth()->user()->first_name }}</a></li>
+                                    @else
+                                        <li><a href="{{ route('login.index') }}">تسجيل دخول</a></li>
+                                        <li><a href="{{ route('register.index') }}">التسجيل</a></li>
+                                    @endif
                                     <li><a href="wishlist.html">قائمة امنياتي</a></li>
                                 </ul>
                             </li>
@@ -147,6 +154,8 @@
                 <li><a href="#">خدمتنا</a>
                 </li>
                 <li><a href="#">عقارات</a>
+
+                <li><a href="{{ route('store.index') }}">منتجاتنا</a>
 
                 </li>
                 <li><a href="#">اتصل بنا</a>
