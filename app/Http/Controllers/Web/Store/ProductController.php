@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Store;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductFeedback;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -18,6 +19,11 @@ class ProductController extends Controller
                 break;
         }
         $products = $product->category->products()->latest()->take(4)->get();
-        return view('website.product-details', compact('product', 'products'));
+        $count_evaluate = 0;
+        foreach (ProductFeedback::query()->where('product_id', $product->id)->get() as $feedback) {
+            $count_evaluate += $feedback->evaluate;
+        }
+        $rate = intval($count_evaluate < 1 ? 1 : $count_evaluate / ProductFeedback::query()->where('product_id', $product->id)->count()) ;
+        return view('website.product-details', compact('product', 'products', 'rate'));
     }
 }

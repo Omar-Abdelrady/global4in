@@ -21,9 +21,16 @@ Route::post('/login', [\App\Http\Controllers\Web\Auth\LoginController::class, 's
 Route::get('/store', [\App\Http\Controllers\Web\Store\StoreController::class, 'index'])->name('store.index');
 Route::get('/store/category/{slug}', [\App\Http\Controllers\Web\Store\StoreController::class, 'category'])->name('store.category');
 Route::get('store/product/{slug}', [\App\Http\Controllers\Web\Store\ProductController::class, 'index'])->name('product.index');
-Route::group(['middleware' => 'web'], function (){
+Route::group(['middleware' => 'auth:web'], function (){
+//    Start Cart Routers
     Route::get('/my-cart', [\App\Http\Controllers\Web\Store\CartController::class, 'index'])->name('cart.index');
     Route::post('/my-cart/add/{slug}', [\App\Http\Controllers\Web\Store\CartController::class, 'add'])->name('cart.add');
+    Route::get('my-cart/remove/{id}', [\App\Http\Controllers\Web\Store\CartController::class, 'remove'])->name('cart.remove');
+//    End Cart Routers
+
+//    Start Evaluate Routers
+    Route::post('/store/product/{slug}/evaluate', [\App\Http\Controllers\Web\Store\EvaluateController::class, 'store'])->name('product.evaluate');
+
 });
 
 Route::get('/admin', function () {
@@ -35,6 +42,9 @@ Route::group(['middleware' => 'auth:web'], function () {
         Route::post('/feedback/store', [\App\Http\Controllers\Web\Store\ProductFeedbackController::class, 'store'])->name('feedback.store');
     });
 });
+
+
+
 
 Route::group(['middleware' => 'auth:admin', 'as' => 'admin.', 'name' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('/', ['App\Http\Controllers\Admin\AdminController', 'index'])->name('index');

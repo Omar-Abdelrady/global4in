@@ -36,6 +36,16 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-12 p-3">
+                    <div class="product-ratting">
+                        <ul>
+                            @for($i=1; $i < $rate; $i++)
+                                <li><a><i class="fas fa-star"></i></a>
+                                </li>
+                            @endfor
+                            <li><a><i class="fas fa-star"></i></a></li>
+                            <li class="review-total"><a> ( {{ $product->feedbacks->count() }} تقييم )</a></li>
+                        </ul>
+                    </div>
                     <h1 class="h2">
                         {{ $product->name }}
                     </h1>
@@ -57,29 +67,33 @@
                         @endif
                     </div>
                     <div>
-                        <div class="d-inline-block">
-                            <select name="size" class="form-control" id="size">
-                                <option>اختر الحجم</option>
-                                @foreach($product->sizes as $size)
-                                    <option value="{{ $size->id }}">{{ $size->name }}</option>
+                        <form action="{{ route('cart.add', $product->slug) }}" method="post">
+                            @csrf
+                            <div class="d-inline-block">
+                                <select name="size" class="form-control" id="size">
+                                    <option disabled selected value>اختر الحجم</option>
+                                    @foreach($product->sizes as $size)
+                                        <option value="{{ $size->name }}">{{ $size->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="d-inline-block mx-2">
+                                <input name="qty" type="number" class="form-control" placeholder="الكمية">
+                            </div>
+                            <div>
+                                <p class="m-0 mt-2">اختر اللون</p>
+                                @foreach($product->colors as $key => $color)
+                                    <label style="background: {{$color->color}};" class="label-color"
+                                           for="color{{$key}}"></label>
+                                    <input class="input-color" type="radio" name="color" id="color{{$key}}"
+                                           value="{{ $color->name }}">
                                 @endforeach
-                            </select>
-                        </div>
-                        <div class="d-inline-block mx-2">
-                            <input name="qy" type="number" class="form-control" placeholder="الكمية">
-                        </div>
-                        <div>
-                            <p class="m-0 mt-2">اختر اللون</p>
-                            @foreach($product->colors as $key => $color)
-                                <label style="background: {{$color->color}};" class="label-color"
-                                       for="color{{$key}}"></label>
-                                <input class="input-color" type="radio" name="color" id="color{{$key}}"
-                                       value="{{ $color->id }}">
-                            @endforeach
-                        </div>
+                            </div>
+                            <button class="btn theme-btn-1 btn-effect-2 text-uppercase">اضف الي العربة</button>
+                            <a class="btn theme-btn-2 bg-danger btn-effect-2 text-white">اضف الي قائمة الامنيات</a>
+
+                        </form>
                     </div>
-                    <button class="btn theme-btn-1 btn-effect-2 text-uppercase">اضف الي العربة</button>
-                    <button class="btn theme-btn-2 bg-danger btn-effect-2">اضف الي قائمة الامنيات</button>
                 </div>
             </div>
         </div>
@@ -95,7 +109,7 @@
                         <div class="ltn__blog-meta">
                             <ul>
                                 <li class="ltn__blog-category">
-                                    <a href="#">{{ $product->category->name }}</a>
+                                    <a href="{{ route('store.category', $product->category->slug) }}">{{ $product->category->name }}</a>
                                 </li>
                                 <li class="ltn__blog-date">
                                     <i class="far fa-calendar-alt"></i>
@@ -104,12 +118,11 @@
                             </ul>
                         </div>
                         <h1>{{ $product->name }}</h1>
-                        <label>{{ $product->category->name }}</label>
                         <h4 class="title-2">الوصف</h4>
 
                         {!! $product->description !!}
                         @if(!$product->specifications->isEmpty())
-                            <h4 class="title-2">تفاصيل الملكية</h4>
+                            <h4 class="title-2">تفاصيل </h4>
                             <table class="table table-striped">
                                 <tbody>
                                 @foreach($product->specifications as $specification)
@@ -122,16 +135,16 @@
                             </table>
                         @endif
                         <div
-                            class="ltn__shop-details-tab-content-inner--- ltn__shop-details-tab-inner-2 ltn__product-details-review-inner mb-60">
+                            class="ltn__shop-details-tab-content-inner--- ltn__shop-details-tab-inner-2 ltn__product-details-review-inner mt-3 mb-60">
                             <h4 class="title-2">تقيمات</h4>
                             <div class="product-ratting">
                                 <ul>
-                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                    <li><a href="#"><i class="far fa-star"></i></a></li>
-                                    <li class="review-total"><a href="#"> ( 95 تقييم )</a></li>
+                                    @for($i=1; $i < $rate; $i++)
+                                        <li><a><i class="fas fa-star"></i></a>
+                                        </li>
+                                    @endfor
+                                    <li><a><i class="fas fa-star"></i></a></li>
+                                    <li class="review-total"><a> ( {{ $product->feedbacks->count() }} تقييم )</a></li>
                                 </ul>
                             </div>
                             <hr>
@@ -139,254 +152,136 @@
                             <div class="ltn__comment-area mb-30">
                                 <div class="ltn__comment-inner">
                                     <ul>
-                                        <li>
-                                            <div class="ltn__comment-item clearfix">
-                                                <div class="ltn__commenter-img">
-                                                    <img src="img/testimonial/1.jpg" alt="Image">
-                                                </div>
-                                                <div class="ltn__commenter-comment">
-                                                    <h6><a href="#">عمر خالد</a></h6>
-                                                    <div class="product-ratting">
-                                                        <ul>
-                                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fas fa-star-half-alt"></i></a>
-                                                            </li>
-                                                            <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                        </ul>
+                                        @foreach($product->feedbacks()->latest()->take(4)->get() as $item)
+                                            <li>
+                                                <div class="ltn__comment-item clearfix">
+                                                    <div class="ltn__commenter-comment">
+                                                        <h6>
+                                                            <a>{{ $item->with('user')->first()->user->first_name.' '.$item->with('user')->first()->user->last_name }}</a>
+                                                        </h6>
+                                                        <div class="product-ratting">
+                                                            <ul>
+                                                                @for($i=0; $i < $item->evaluate; $i++)
+                                                                    <li><a><i class="fas fa-star"></i></a>
+                                                                    </li>
+                                                                @endfor
+                                                            </ul>
+                                                        </div>
+                                                        <p>
+                                                            {{ $item->comment }}
+                                                        </p>
+                                                        <span
+                                                            class="ltn__comment-reply-btn">{{ $item->created_at->format('Y-m-d') }}</span>
                                                     </div>
-                                                    <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما
-                                                        سيلهي القارئ عن التركيز على الشكل الخارجي</p>
-                                                    <span class="ltn__comment-reply-btn">سبتمبر3, 2020</span>
                                                 </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="ltn__comment-item clearfix">
-                                                <div class="ltn__commenter-img">
-                                                    <img src="img/testimonial/3.jpg" alt="Image">
-                                                </div>
-                                                <div class="ltn__commenter-comment">
-                                                    <h6><a href="#">خالد عقبي</a></h6>
-                                                    <div class="product-ratting">
-                                                        <ul>
-                                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fas fa-star-half-alt"></i></a>
-                                                            </li>
-                                                            <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما
-                                                        سيلهي القارئ عن التركيز على الشكل الخارجي</p>
-                                                    <span class="ltn__comment-reply-btn">يناير 2, 2020</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="ltn__comment-item clearfix">
-                                                <div class="ltn__commenter-img">
-                                                    <img src="img/testimonial/2.jpg" alt="Image">
-                                                </div>
-                                                <div class="ltn__commenter-comment">
-                                                    <h6><a href="#">يونس محمود</a></h6>
-                                                    <div class="product-ratting">
-                                                        <ul>
-                                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fas fa-star-half-alt"></i></a>
-                                                            </li>
-                                                            <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما
-                                                        سيلهي القارئ عن التركيز على الشكل الخارجي</p>
-                                                    <span class="ltn__comment-reply-btn">مارس 2, 2020</span>
-                                                </div>
-                                            </div>
-                                        </li>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
                             <!-- comment-reply -->
-                            <div class="ltn__comment-reply-area ltn__form-box mb-30">
-                                <form action="#">
-                                    <h4>اضف تقييم</h4>
-                                    <div class="mb-30">
-                                        <div class="add-a-review">
-                                            <h6>تقييمك:</h6>
-                                            <div class="product-ratting">
+                            @if(auth()->guard('web')->check())
+                                <div class="ltn__comment-reply-area ltn__form-box mb-30">
+                                    <form action="{{ route('product.evaluate', $product->slug) }}" method="post">
+                                        @csrf
+                                        <h4>اضف تقييم</h4>
+                                        <div class="mb-30">
+                                            <div class="add-a-review">
+                                                <h6>تقييمك:</h6>
+                                                <div class="product-ratting">
+                                                    <select class="form-control" name="evaluate" id="">
+                                                        <option>أختر تقييم</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="input-item input-item-textarea ltn__custom-icon">
+                                            <textarea name="comment" placeholder="اكتب تعليق...."></textarea>
+                                        </div>
+                                        <div class="btn-wrapper">
+                                            <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit">
+                                                ارسال
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            @else
+                                <h3><a href="{{ route('login.index') }}">سجل الدخول الان للتقييم</a></h3>
+                            @endif
+                        </div>
+
+                        <h4 class="title-2">منتجات ذات صلة</h4>
+                        <div class="row">
+                        @foreach($product->category->products()->latest()->take(2)->get() as $product)
+                            <!-- Product start -->
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div
+                                        class="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---">
+                                        <div class="product-img">
+                                            <a href="{{ route('product.index', $product->slug) }}">
+                                                <img
+                                                    class="w-100"
+                                                    src="{{ asset('storage/'. $product->photos[0]->image_medium) }}"
+                                                    alt="{{ $product->name }}">
+                                            </a>
+                                            <div class="real-estate-agent">
+                                                <div class="agent-img">
+                                                    @if($product->discount != 0)
+                                                        <a href="{{ route('product.index', $product->slug) }}"
+                                                           class="disount-class">
+                                                            {{ $product->discount . '%' }}
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-info">
+                                            <h2 class="product-title">
+                                                <a href="{{ route('product.index', $product->slug) }}">
+                                                    {{ $product->name }}
+                                                </a>
+                                            </h2>
+                                            <ul class="ltn__list-item-2--- ltn__list-item-2-before--- ltn__plot-brief">
+                                                <p>
+                                                    {{ $product->sub_description }}
+                                                </p>
+                                            </ul>
+                                            <div class="product-hover-action">
                                                 <ul>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                    <li>
+                                                        <a href="#" title="Wishlist" data-toggle="modal"
+                                                           data-target="#liton_wishlist_modal">
+                                                            <i class="flaticon-heart-1"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ route('product.index', $product->slug) }}"
+                                                           title="Product Details">
+                                                            <i class="flaticon-add"></i>
+                                                        </a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="input-item input-item-textarea ltn__custom-icon">
-                                        <textarea placeholder="اكتب تعليق...."></textarea>
-                                    </div>
-                                    <div class="input-item input-item-name ltn__custom-icon">
-                                        <input type="text" placeholder="الاسم....">
-                                    </div>
-                                    <div class="input-item input-item-email ltn__custom-icon">
-                                        <input type="email" placeholder="البريد الاليكتروني...">
-                                    </div>
-                                    <div class="input-item input-item-website ltn__custom-icon">
-                                        <input type="text" name="website" placeholder="الموقع....">
-                                    </div>
-                                    <label class="mb-0"><input type="checkbox" name="agree"> احفظ اسمي ، بريدي
-                                        الإلكتروني ، والموقع الإلكتروني في هذا المتصفح لاستخدامها المرة المقبلة في
-                                        تعليقي.</label>
-                                    <div class="btn-wrapper">
-                                        <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit">
-                                            ارسال
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <h4 class="title-2">اعلانات متعلقة</h4>
-                        <div class="row">
-                            <!-- ltn__product-item -->
-                            <div class="col-xl-6 col-sm-6 col-12">
-                                <div class="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---">
-                                    <div class="product-img">
-                                        <a href="product-details.html"><img src="img/product-3/1.jpg" alt="#"></a>
-                                        <div class="real-estate-agent">
-                                            <div class="agent-img">
-                                                <a href="team-details.html"><img src="img/blog/author.jpg" alt="#"></a>
+                                        <div class="product-info-bottom">
+                                            <div class="product-price">
+                                                <span
+                                                    class="{{ $product->discount != 0 ? 'text-line-through text-gray-dark': null }}">ريال{{ $product->price }}<label></label></span>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-info">
-                                        <div class="product-badge">
-                                            <ul>
-                                                <li class="sale-badg">اعلان</li>
-                                            </ul>
-                                        </div>
-                                        <h2 class="product-title"><a href="product-details.html">للايجار شقه بجدة</a>
-                                        </h2>
-                                        <div class="product-img-location">
-                                            <ul>
-                                                <li>
-                                                    <a href="product-details.html"><i class="flaticon-pin"></i> جدة
-                                                        السعودية</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <ul class="ltn__list-item-2--- ltn__list-item-2-before--- ltn__plot-brief">
-                                            <li><span>3 </span>
-                                                غرف
-                                            </li>
-                                            <li><span>2 </span>
-                                                غرف
-                                            </li>
-                                            <li><span>3450 </span>
-                                                غرف
-                                            </li>
-                                        </ul>
-                                        <div class="product-hover-action">
-                                            <ul>
-                                                <li>
-                                                    <a href="#" title="Quick View" data-toggle="modal"
-                                                       data-target="#quick_view_modal">
-                                                        <i class="flaticon-expand"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" title="Wishlist" data-toggle="modal"
-                                                       data-target="#liton_wishlist_modal">
-                                                        <i class="flaticon-heart-1"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="portfolio-details.html" title="Compare">
-                                                        <i class="flaticon-add"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-info-bottom">
-                                        <div class="product-price">
-                                            <span>ريال349,00<label>/شهر</label></span>
+                                            @if($product->discount != 0)
+                                                <div class="product-price ">
+                                                    <span>ريال{{ $product->price - ( $product->price * ($product->discount / 100) ) }}<label></label></span>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- ltn__product-item -->
-                            <div class="col-xl-6 col-sm-6 col-12">
-                                <div class="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---">
-                                    <div class="product-img">
-                                        <a href="product-details.html"><img src="img/product-3/2.jpg" alt="#"></a>
-                                        <div class="real-estate-agent">
-                                            <div class="agent-img">
-                                                <a href="team-details.html"><img src="img/blog/author.jpg" alt="#"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-info">
-                                        <div class="product-badge">
-                                            <ul>
-                                                <li class="sale-badg">اعلان</li>
-                                            </ul>
-                                        </div>
-                                        <h2 class="product-title"><a href="product-details.html">للايجار فيلا
-                                                بالرياض</a></h2>
-                                        <div class="product-img-location">
-                                            <ul>
-                                                <li>
-                                                    <a href="product-details.html"><i class="flaticon-pin"></i>
-                                                        الرياض</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <ul class="ltn__list-item-2--- ltn__list-item-2-before--- ltn__plot-brief">
-                                            <li><span>3 </span>
-                                                غرف
-                                            </li>
-                                            <li><span>2 </span>
-                                                غرف
-                                            </li>
-                                            <li><span>3450 </span>
-                                                غرف
-                                            </li>
-                                        </ul>
-                                        <div class="product-hover-action">
-                                            <ul>
-                                                <li>
-                                                    <a href="#" title="Quick View" data-toggle="modal"
-                                                       data-target="#quick_view_modal">
-                                                        <i class="flaticon-expand"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" title="Wishlist" data-toggle="modal"
-                                                       data-target="#liton_wishlist_modal">
-                                                        <i class="flaticon-heart-1"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="portfolio-details.html" title="Compare">
-                                                        <i class="flaticon-add"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-info-bottom">
-                                        <div class="product-price">
-                                            <span>ريال349,00<label>/الشهر</label></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                <!--Product End-->
+                            @endforeach
                         </div>
                     </div>
                 </div>

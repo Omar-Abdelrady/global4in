@@ -95,7 +95,7 @@
                                 <a href="#"><i class="icon-user"></i></a>
                                 <ul>
                                     @if(auth()->check())
-                                        <li><a >{{ auth()->user()->first_name }}</a></li>
+                                        <li><a>{{ auth()->user()->first_name }}</a></li>
                                     @else
                                         <li><a href="{{ route('login.index') }}">تسجيل دخول</a></li>
                                         <li><a href="{{ route('register.index') }}">التسجيل</a></li>
@@ -107,9 +107,11 @@
                     </div>
                     <!-- mini-cart -->
                     <div class="mini-cart-icon">
-                        <a href="#" class="ltn__utilize-toggle">
+                        <a href="{{ route('cart.index') }}" class="">
                             <i class="icon-shopping-cart"></i>
-                            <sup>2</sup>
+                            @auth('web')
+                                <sup>{{ \ShoppingCart::countRows() }}</sup>
+                            @endauth
                         </a>
                     </div>
                     <!-- mini-cart -->

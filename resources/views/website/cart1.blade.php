@@ -24,68 +24,34 @@
                                     <th class="cart-product-subtotal">Subtotal</th>
                                 </thead> -->
                                 <tbody>
-                                <tr>
-                                    <td class="cart-product-remove">x</td>
-                                    <td class="cart-product-image">
-                                        <a href="product-details.html"><img src="img/product/1.png" alt="#"></a>
-                                    </td>
-                                    <td class="cart-product-info">
-                                        <h4><a href="product-details.html">المنتج رقم واحد</a></h4>
-                                    </td>
-                                    <td class="cart-product-price">ريال149.00</td>
-                                    <td class="cart-product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
-                                        </div>
-                                    </td>
-                                    <td class="cart-product-subtotal">ريال298.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="cart-product-remove">x</td>
-                                    <td class="cart-product-image">
-                                        <a href="product-details.html"><img src="img/product/2.png" alt="#"></a>
-                                    </td>
-                                    <td class="cart-product-info">
-                                        <h4><a href="product-details.html">منتج رقم ٢</a></h4>
-                                    </td>
-                                    <td class="cart-product-price">ريال85.00</td>
-                                    <td class="cart-product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
-                                        </div>
-                                    </td>
-                                    <td class="cart-product-subtotal">ريال170.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="cart-product-remove">x</td>
-                                    <td class="cart-product-image">
-                                        <a href="product-details.html"><img src="img/product/3.png" alt="#"></a>
-                                    </td>
-                                    <td class="cart-product-info">
-                                        <h4><a href="product-details.html">منتج رقم ٣</a></h4>
-                                    </td>
-                                    <td class="cart-product-price">ريال75.00</td>
-                                    <td class="cart-product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
-                                        </div>
-                                    </td>
-                                    <td class="cart-product-subtotal">ريال150.00</td>
-                                </tr>
-                                <tr class="cart-coupon-row">
-                                    <td colspan="6">
-                                        <div class="cart-coupon">
-                                            <input type="text" name="cart-coupon" placeholder="الكبون">
-                                            <button type="submit" class="btn theme-btn-2 btn-effect-2">ادخل رقم الكبون
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn theme-btn-2 btn-effect-2-- disabled">تحديث
-                                            السله
-                                        </button>
-                                    </td>
-                                </tr>
+                                @foreach(\ShoppingCart::all() as $item)
+                                    <tr>
+                                        <td class="cart-product-remove"><a href="{{ route('cart.remove', $item->__raw_id) }}">x</a></td>
+                                        <td class="cart-product-image">
+                                            <a href="{{ route('product.index', \App\Models\Product::query()->findOrFail($item->id)->first()->slug) }}">
+                                                <img src="{{ asset('storage/'.\App\Models\Product::query()->findOrFail($item->id)->first()->photos[0]->image_avatar) }}" alt="#">
+                                            </a>
+                                        </td>
+                                        <td class="cart-product-info">
+                                            <h4>
+                                                <a href="{{ route('product.index', \App\Models\Product::query()->findOrFail($item->id)->first()->slug) }}">
+                                                    {{ $item->name }}
+                                                </a>
+                                            </h4>
+                                        </td>
+                                        <td class="cart-product-price">ريال{{$item->price}}</td>
+{{--                                        <td class="cart-product-quantity">--}}
+{{--                                            <div class="cart-plus-minus">--}}
+{{--                                                <input type="text" value="02" name="qtybutton"--}}
+{{--                                                       class="cart-plus-minus-box">--}}
+{{--                                            </div>--}}
+{{--                                        </td>--}}
+                                        <td class="cart-product-info">
+                                            <h4>{{$item->qty}}</h4>
+                                        </td>
+                                        <td class="cart-product-subtotal">ريال{{ $item->total }}</td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
