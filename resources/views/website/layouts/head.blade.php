@@ -18,3 +18,7 @@
 <!-- Responsive css -->
 <link rel="stylesheet" href="{{ asset('assets/front-assets/css/responsive.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/front-assets/css/custom.css') }}">
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/swiper/swiper-bundle.min.css"
+/>

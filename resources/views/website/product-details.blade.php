@@ -7,40 +7,79 @@
 @section('bread', $product->name)
 
 @section('content')
-    <!-- LOGIN AREA START -->
-    <!-- IMAGE SLIDER AREA START (img-slider-3) -->
-    <div class="ltn__img-slider-area mb-90">
-        <div class="container-fluid">
-            <div class="row ltn__image-slider-5-active slick-arrow-1 slick-arrow-1-inner ltn__no-gutter-all">
-                @foreach($product->photos as $photo)
-                    <div class="col-lg-12">
-                        <div class="ltn__img-slide-item-4">
-                            <a>
-                                <img src="{{ asset('storage/'. $photo->image) }}" alt="Image">
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-
     <section>
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="d-inline-block">
-                        <div class="slider-nav">
+                <div class="col-md-6 col-12">
+                    <div
+                        style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+                        class="swiper-container mySwiper2"
+                    >
+                        <div class="swiper-wrapper">
                             @foreach($product->photos as $photo)
-                                <div>
-                                    <img width="50" src="{{ asset('storage/'. $photo->image) }}" alt="Image">
+                                <div class="swiper-slide">
+                                    <img src="{{ asset('storage/'.$photo->image) }}"/>
                                 </div>
                             @endforeach
                         </div>
-                        <div class="slider-for">
-
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                    <div thumbsSlider="" class="swiper-container mySwiper">
+                        <div class="swiper-wrapper">
+                            @foreach($product->photos as $photo)
+                                <div class="swiper-slide">
+                                    <img src="{{ asset('storage/'.$photo->image_avatar) }}"/>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
+                </div>
+                <div class="col-md-6 col-12 p-3">
+                    <h1 class="h2">
+                        {{ $product->name }}
+                    </h1>
+                    <p>
+                        {{ $product->sub_description }}
+                    </p>
+                    <div>
+                        @if($product->discount != 0)
+                            <p class="text-line-through h4 d-inline-block ">
+                                {{ $product->price }}ريال
+                            </p>
+                            <p class="h3 ltn__secondary-color d-inline-block my-2">
+                                {{ $product->price - ( $product->price * ($product->discount / 100) ) }} ريال
+                            </p>
+                        @else
+                            <p class="h3 ltn__secondary-color ">
+                                {{ $product->price }} ريال
+                            </p>
+                        @endif
+                    </div>
+                    <div>
+                        <div class="d-inline-block">
+                            <select name="size" class="form-control" id="size">
+                                <option>اختر الحجم</option>
+                                @foreach($product->sizes as $size)
+                                    <option value="{{ $size->id }}">{{ $size->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="d-inline-block mx-2">
+                            <input name="qy" type="number" class="form-control" placeholder="الكمية">
+                        </div>
+                        <div>
+                            <p class="m-0 mt-2">اختر اللون</p>
+                            @foreach($product->colors as $key => $color)
+                                <label style="background: {{$color->color}};" class="label-color"
+                                       for="color{{$key}}"></label>
+                                <input class="input-color" type="radio" name="color" id="color{{$key}}"
+                                       value="{{ $color->id }}">
+                            @endforeach
+                        </div>
+                    </div>
+                    <button class="btn theme-btn-1 btn-effect-2 text-uppercase">اضف الي العربة</button>
+                    <button class="btn theme-btn-2 bg-danger btn-effect-2">اضف الي قائمة الامنيات</button>
                 </div>
             </div>
         </div>
@@ -69,7 +108,7 @@
                         <h4 class="title-2">الوصف</h4>
 
                         {!! $product->description !!}
-                        @if(!empty($product->specifications))
+                        @if(!$product->specifications->isEmpty())
                             <h4 class="title-2">تفاصيل الملكية</h4>
                             <table class="table table-striped">
                                 <tbody>
@@ -81,47 +120,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{--                            <div class="property-detail-info-list section-bg-1 clearfix mb-60">--}}
-                            {{--                                <ul>--}}
-                            {{--                                    @foreach($product->specifications as $item)--}}
-                            {{--                                        <li><label>{{ $item->name }}:</label></li>--}}
-                            {{--                                    @endforeach--}}
-                            {{--                                </ul>--}}
-                            {{--                                <ul>--}}
-                            {{--                                    @foreach($product->specifications as $item)--}}
-                            {{--                                    <li><span>{{ $item->body }} </span></li>--}}
-                            {{--                                    @endforeach--}}
-                            {{--                                </ul>--}}
-                            {{--                            </div>--}}
                         @endif
-                        <h4 class="title-2">صور </h4>
-                        <div class="ltn__property-details-gallery mb-30">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <a href="{{ asset('storage/'.$product->photos[0]->image_medium) }}"
-                                       data-rel="lightcase:myCollection">
-                                        <img class="mb-30"
-                                             src="{{ asset('storage/'.$product->photos[0]->image_medium) }}"
-                                             alt="Image">
-                                    </a>
-                                    <a href="{{ asset('storage/'.$product->photos[1]->image_medium) }}"
-                                       data-rel="lightcase:myCollection">
-                                        <img class="mb-30"
-                                             src="{{ asset('storage/'.$product->photos[1]->image_medium) }}"
-                                             alt="Image">
-                                    </a>
-                                </div>
-                                @if(isset($product->photos[2]->image_medium))
-                                    <div class="col-md-6">
-                                        <a href="{{ asset('storage/'.$product->photos[2]->image) }}"
-                                           data-rel="lightcase:myCollection">
-                                            <img class="img-fluid"
-                                                 src="{{ asset('storage/'.$product->photos[2]->image) }}" alt="Image">
-                                        </a>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
                         <div
                             class="ltn__shop-details-tab-content-inner--- ltn__shop-details-tab-inner-2 ltn__product-details-review-inner mb-60">
                             <h4 class="title-2">تقيمات</h4>
@@ -401,6 +400,28 @@
 
 @section('js-code')
     <script>
+        var swiper = new Swiper(".mySwiper", {
+            zoom: true,
+            loop: true,
+            spaceBetween: 10,
+            slidesPerView: 4,
+            freeMode: true,
+            watchSlidesVisibility: true,
+            watchSlidesProgress: true,
+
+        });
+        var swiper2 = new Swiper(".mySwiper2", {
+            zoom: true,
+            loop: true,
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            thumbs: {
+                swiper: swiper,
+            },
+        });
         $('.slider-for').slick(
             {
                 slidesToShow: 1,
@@ -418,5 +439,10 @@
             centerMode: true,
             focusOnSelect: true
         });
+        $(document).on('click', '.label-color', function () {
+
+            $('.label-color').removeClass('label-color-active')
+            $(this).addClass('label-color-active')
+        })
     </script>
 @endsection
