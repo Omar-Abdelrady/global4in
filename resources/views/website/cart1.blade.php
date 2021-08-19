@@ -26,10 +26,13 @@
                                 <tbody>
                                 @foreach(\ShoppingCart::all() as $item)
                                     <tr>
-                                        <td class="cart-product-remove"><a href="{{ route('cart.remove', $item->__raw_id) }}">x</a></td>
+                                        <td class="cart-product-remove"><a
+                                                href="{{ route('cart.remove', $item->__raw_id) }}">x</a></td>
                                         <td class="cart-product-image">
                                             <a href="{{ route('product.index', \App\Models\Product::query()->findOrFail($item->id)->first()->slug) }}">
-                                                <img src="{{ asset('storage/'.\App\Models\Product::query()->findOrFail($item->id)->first()->photos[0]->image_avatar) }}" alt="#">
+                                                <img
+                                                    src="{{ asset('storage/'.\App\Models\Product::query()->findOrFail($item->id)->first()->photos[0]->image_avatar) }}"
+                                                    alt="#">
                                             </a>
                                         </td>
                                         <td class="cart-product-info">
@@ -40,12 +43,12 @@
                                             </h4>
                                         </td>
                                         <td class="cart-product-price">ريال{{$item->price}}</td>
-{{--                                        <td class="cart-product-quantity">--}}
-{{--                                            <div class="cart-plus-minus">--}}
-{{--                                                <input type="text" value="02" name="qtybutton"--}}
-{{--                                                       class="cart-plus-minus-box">--}}
-{{--                                            </div>--}}
-{{--                                        </td>--}}
+                                        {{--                                        <td class="cart-product-quantity">--}}
+                                        {{--                                            <div class="cart-plus-minus">--}}
+                                        {{--                                                <input type="text" value="02" name="qtybutton"--}}
+                                        {{--                                                       class="cart-plus-minus-box">--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </td>--}}
                                         <td class="cart-product-info">
                                             <h4>{{$item->qty}}</h4>
                                         </td>
@@ -59,27 +62,24 @@
                             <h4>مجموع السله</h4>
                             <table class="table">
                                 <tbody>
-                                <tr>
-                                    <td>السله</td>
-                                    <td>ريال618.00</td>
-                                </tr>
-                                <tr>
-                                    <td>سله</td>
-                                    <td>ريال15.00</td>
-                                </tr>
-                                <tr>
-                                    <td>سله</td>
-                                    <td>ريال00.00</td>
-                                </tr>
+                                @foreach(\ShoppingCart::all() as $item)
+                                    <tr>
+                                        <td>{{ $item->name . ' ×'. $item->qty }}</td>
+                                        <td> {{ $item->total }} ريال</td>
+                                    </tr>
+                                @endforeach
                                 <tr>
                                     <td><strong>مجموع الطلب</strong></td>
-                                    <td><strong>ريال633.00</strong></td>
+                                    <td><strong>{{ \ShoppingCart::total() }} ريال</strong></td>
                                 </tr>
                                 </tbody>
                             </table>
-                            <div class="btn-wrapper text-right">
-                                <a href="checkout.html" class="theme-btn-1 btn btn-effect-1">دفع</a>
-                            </div>
+                            @if(!\ShoppingCart::isEmpty())
+                                <div class="btn-wrapper text-right">
+                                    <a href="{{ route('payment.checkout') }}"
+                                       class="theme-btn-1 btn btn-effect-1">دفع</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -21,12 +21,24 @@ Route::post('/login', [\App\Http\Controllers\Web\Auth\LoginController::class, 's
 Route::get('/store', [\App\Http\Controllers\Web\Store\StoreController::class, 'index'])->name('store.index');
 Route::get('/store/category/{slug}', [\App\Http\Controllers\Web\Store\StoreController::class, 'category'])->name('store.category');
 Route::get('store/product/{slug}', [\App\Http\Controllers\Web\Store\ProductController::class, 'index'])->name('product.index');
-Route::group(['middleware' => 'auth:web'], function (){
+Route::get('store/wishlist', [\App\Http\Controllers\Web\Store\WishlistController::class, 'index'])->name('store.wishlist');
+Route::get('store/wishlist/{slug}', [\App\Http\Controllers\Web\Store\WishlistController::class, 'add'])->name('store.wishlist.add');
+Route::get('store/wishlist/remove/{id}', [\App\Http\Controllers\Web\Store\WishlistController::class, 'remove'])->name('store.wishlist.remove');
+Route::group(['middleware' => 'auth:web'], function () {
 //    Start Cart Routers
     Route::get('/my-cart', [\App\Http\Controllers\Web\Store\CartController::class, 'index'])->name('cart.index');
     Route::post('/my-cart/add/{slug}', [\App\Http\Controllers\Web\Store\CartController::class, 'add'])->name('cart.add');
     Route::get('my-cart/remove/{id}', [\App\Http\Controllers\Web\Store\CartController::class, 'remove'])->name('cart.remove');
 //    End Cart Routers
+
+//    Start Checkout Routers
+    Route::get('/store/payment-checkout', [\App\Http\Controllers\Web\Store\PaymentController::class, 'index'])->name('payment.checkout');
+    Route::get('/store/payment-checkout/shopper', [\App\Http\Controllers\Web\Store\PaymentController::class, 'shopper'])->name('payment.shopper');
+    Route::view('/store/payment-done', 'website.checkout-status')->name('payment.status');
+
+//    Start Order Information Route
+    Route::post('/store/order-information', [\App\Http\Controllers\Web\Store\OrderController::class, 'store'])->name('order.store');
+    Route::post('/store/order-information/update', [\App\Http\Controllers\Web\Store\OrderController::class, 'update'])->name('order.update');
 
 //    Start Evaluate Routers
     Route::post('/store/product/{slug}/evaluate', [\App\Http\Controllers\Web\Store\EvaluateController::class, 'store'])->name('product.evaluate');
@@ -44,8 +56,6 @@ Route::group(['middleware' => 'auth:web'], function () {
 });
 
 
-
-
 Route::group(['middleware' => 'auth:admin', 'as' => 'admin.', 'name' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('/', ['App\Http\Controllers\Admin\AdminController', 'index'])->name('index');
 
@@ -61,13 +71,14 @@ Route::group(['middleware' => 'auth:admin', 'as' => 'admin.', 'name' => 'admin',
         Route::resource('sizes', \App\Http\Controllers\Admin\Store\SizeController::class)->parameters(['sizes' => 'id']);
         Route::resource('colors', \App\Http\Controllers\Admin\Store\ColorController::class)->parameters(['colors' => 'id']);
         Route::resource('products', \App\Http\Controllers\Admin\Store\ProductController::class)->parameters(['products' => 'slug']);
+        Route::resource('orders', \App\Http\Controllers\Admin\Store\OrderController::class)->parameters(['orders' => 'id']);
     });
 
     Route::resource('/service', \App\Http\Controllers\Admin\ServiceController::class)->parameters(['service' => 'slug']);
 
-    Route::group(['as' => 'profile', 'prefix' => 'profile', 'name' => 'profile'], function (){
-       Route::get('/index', [\App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('.index');
-       Route::get('/edit/', [\App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('.edit');
+    Route::group(['as' => 'profile', 'prefix' => 'profile', 'name' => 'profile'], function () {
+        Route::get('/index', [\App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('.index');
+        Route::get('/edit/', [\App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('.edit');
     });
 
     Route::get('admin/logout', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'logout'])->name('admin.logout');

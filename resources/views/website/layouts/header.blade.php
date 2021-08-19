@@ -100,7 +100,7 @@
                                         <li><a href="{{ route('login.index') }}">تسجيل دخول</a></li>
                                         <li><a href="{{ route('register.index') }}">التسجيل</a></li>
                                     @endif
-                                    <li><a href="wishlist.html">قائمة امنياتي</a></li>
+                                    <li><a href="{{ route('store.wishlist') }}">قائمة امنياتي</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -167,16 +167,18 @@
         <div class="ltn__utilize-buttons ltn__utilize-buttons-2">
             <ul>
                 <li>
-                    <a href="wishlist.html" title="Wishlist">
+                    <a href="{{ route('store.wishlist') }}" title="Wishlist">
                             <span class="utilize-btn-icon">
                                 <i class="far fa-heart"></i>
-                                <sup>3</sup>
+                                <sup>@auth('web')
+                                        <sup>{{ \ShoppingCart::countRows() }}</sup>
+                                    @endauth</sup>
                             </span>
                         قائمة امنياتي
                     </a>
                 </li>
                 <li>
-                    <a href="cart.html" title="Shoping Cart">
+                    <a href="{{ route('cart.index') }}" title="Shoping Cart">
                             <span class="utilize-btn-icon">
                                 <i class="fas fa-shopping-cart"></i>
                                 <sup>5</sup>

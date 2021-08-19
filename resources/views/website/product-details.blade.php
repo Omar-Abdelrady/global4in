@@ -90,7 +90,7 @@
                                 @endforeach
                             </div>
                             <button class="btn theme-btn-1 btn-effect-2 text-uppercase">اضف الي العربة</button>
-                            <a class="btn theme-btn-2 bg-danger btn-effect-2 text-white">اضف الي قائمة الامنيات</a>
+                            <a href="{{ route('store.wishlist.add', $product->slug) }}" class="btn theme-btn-2 bg-danger btn-effect-2 text-white">اضف الي قائمة الامنيات</a>
 
                         </form>
                     </div>

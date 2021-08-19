@@ -37,7 +37,7 @@ class LoginController extends Controller
             }
         }else{
             session()->flash('error', 'عذرا هذا المستخدم غير موجود');
-            return back();
+            return url()->previous();
         }
     }
     public function logout()

@@ -66,6 +66,13 @@
                                 <p>المقاسات</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.store.orders.index') }}"
+                               class="nav-link {{ Route::is('admin.store.sizes.*') ? 'active': null }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p> الطلبات@if(\App\Models\Order::query()->where('read', 0)->count() > 0) <span class="bg-danger rounded px-2">{{\App\Models\Order::query()->where('read', 0)->count()}}</span> @endif</p>
+                            </a>
+                        </li>
                     </ul>
                 <li class="nav-item">
                     <a href="{{ route('admin.service.index') }}" class="nav-link {{ Route::is('admin.service.*') ? 'active' : null }} ">
