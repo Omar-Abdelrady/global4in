@@ -4,6 +4,10 @@
 
 @section('description', 'الرئيسية - جلوبل 4 انفيست')
 
+@section('keywords', 'جلوبل 4 انفيست ')
+
+@section('image', asset('assets/front-assets/img/logo-2.png'))
+
 @section('content')
     <!-- Best Services Section -->
     <div class="ltn__feature-area section-bg-1 pt-120 pb-90 mb-120---">

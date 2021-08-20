@@ -26,12 +26,12 @@ class StoreOrderRequest extends FormRequest
         return [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|integer',
             'address' => 'required',
             'city' => 'required',
             'country' => 'required',
-            'zip' => 'required',
+            'zip' => 'required|integer',
         ];
     }
 
@@ -41,11 +41,13 @@ class StoreOrderRequest extends FormRequest
             'first_name.required' => 'عذرا الاسم الاول مطلوب',
             'last_name.required' => 'عذرا الاسم الثاني مطلوب',
             'email.required' => 'عذرا البريد الالكتروني مطلوب',
+            'email.email' => 'يجب كتابة البريد الالكتروني بشكل صحيح',
             'phone.required' => 'عذرا رقم الهاتف مطلوب',
             'address.required' => 'عذرا العنوان مطلوب مطلوب',
             'city.required' => 'عذرا المدينة مطلوبة',
             'country.required' => 'عذرا البلد مطلوبة',
-            'zip.required' => 'عذرا الرمز البريدي مطلوب'
+            'zip.required' => 'عذرا الرمز البريدي مطلوب',
+            'zip.integer' => 'عذرا الرمز البريدي يجب ان يكون رقم'
         ];
     }
 }

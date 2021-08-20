@@ -4,6 +4,10 @@
 
 @section('description', $product->sub_description)
 
+@section('keywords', $product->keywords)
+
+@section('image', $product->photos[0]->image_medioum)
+
 @section('bread', $product->name)
 
 @section('content')

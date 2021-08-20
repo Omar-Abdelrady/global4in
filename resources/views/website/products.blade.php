@@ -4,6 +4,10 @@
 
 @section('description', isset($category) ? $category->sub_description :'مرحبا بك في متجر جلوبل 4 انفيست نقدم لك افضل اسعار وافضل منتجات')
 
+@section('keywords', isset($category) ? $category->keywords :'مرحبا بك في متجر جلوبل 4 انفيست نقدم لك افضل اسعار وافضل منتجات')
+
+@section('image', asset('assets/front-assets/img/logo-2.png'))
+
 @section('bread', isset($category) ? $category->name :'المتجر')
 
 @section('content')
@@ -40,8 +44,9 @@
                                     <div class="col-lg-12">
                                         <!-- Search Widget -->
                                         <div class="ltn__search-widget mb-30">
-                                            <form action="#">
-                                                <input type="text" name="search" placeholder="بحث عن...">
+                                            <form action="{{ route('product.search') }}" method="get">
+                                                @csrf
+                                                <input required type="text" name="search" placeholder="بحث عن...">
                                                 <button type="submit"><i class="fas fa-search"></i></button>
                                             </form>
                                         </div>

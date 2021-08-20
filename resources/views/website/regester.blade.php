@@ -1,7 +1,10 @@
 @extends('website.layouts.app')
 @section('title', 'تسجيل مستخدم جديد - جلوبل 4 انفيست')
 @section('discription', 'يمكنك الان عمل حساب مجاني في جلوبل 4 انفيست والحصول علي كل مميازته')
+@section('keywords', 'جلوبل 4 انفيست ')
+@section('image', asset('assets/front-assets/img/logo-2.png'))
 @section('bread', 'تسجيل')
+
 @section('content')
 
     <!-- Register AREA START -->

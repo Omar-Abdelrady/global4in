@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function store(StoreOrderRequest $request)
     {
-        $request->request->add(['user_id'=>auth()->guard('web')->id()]);
+        $request->request->add(['user_id' => auth()->guard('web')->id()]);
         OrderInformation::query()->create($request->all());
         session()->flash('success', 'تم اضافى عنوان الفاتورة بنجاح يمكنك الان اتمام عملية الشراء');
         return back();

@@ -4,6 +4,10 @@
 
 @section('description', 'عربة التسوق يمكنك اضافة المنتجات الخاصة بك في عربتك الخاصة - تسوق مع جلوبل 4 انفيست')
 
+@section('keywords', 'جلوبل 4 انفيست ')
+
+@section('image', asset('assets/front-assets/img/logo-2.png'))
+
 @section('bread', 'العربة')
 
 @section('content')

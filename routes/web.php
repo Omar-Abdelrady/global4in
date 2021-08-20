@@ -21,6 +21,7 @@ Route::post('/login', [\App\Http\Controllers\Web\Auth\LoginController::class, 's
 Route::get('/store', [\App\Http\Controllers\Web\Store\StoreController::class, 'index'])->name('store.index');
 Route::get('/store/category/{slug}', [\App\Http\Controllers\Web\Store\StoreController::class, 'category'])->name('store.category');
 Route::get('store/product/{slug}', [\App\Http\Controllers\Web\Store\ProductController::class, 'index'])->name('product.index');
+Route::get('store/search/', [\App\Http\Controllers\Web\Store\ProductController::class, 'search'])->name('product.search');
 Route::get('store/wishlist', [\App\Http\Controllers\Web\Store\WishlistController::class, 'index'])->name('store.wishlist');
 Route::get('store/wishlist/{slug}', [\App\Http\Controllers\Web\Store\WishlistController::class, 'add'])->name('store.wishlist.add');
 Route::get('store/wishlist/remove/{id}', [\App\Http\Controllers\Web\Store\WishlistController::class, 'remove'])->name('store.wishlist.remove');

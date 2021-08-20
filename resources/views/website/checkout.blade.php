@@ -4,6 +4,10 @@
 
 @section('description', 'تمنحك جلوبل 4 انفيست عملية دفع مؤمنة ')
 
+@section('keywords', 'جلوبل 4 انفيست ')
+
+@section('image', asset('assets/front-assets/img/logo-2.png'))
+
 @section('bread', 'عملية الدفع')
 
 @section('content')

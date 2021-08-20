@@ -4,6 +4,10 @@
 
 @section('description', 'تسجيل الدخول في جلوبل 4 انفيست ')
 
+@section('keywords', 'جلوبل 4 انفيست ')
+
+@section('image', asset('assets/front-assets/img/logo-2.png'))
+
 @section('bread', 'تسجيل الدخول')
 @section('content')
     <!-- LOGIN AREA START -->

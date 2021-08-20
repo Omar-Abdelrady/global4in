@@ -4,6 +4,10 @@
 
 @section('description', 'قائمة امنياتك - جلوبل 4 انفيست')
 
+@section('keywords', 'جلوبل 4 انفيست ')
+
+@section('image', asset('assets/front-assets/img/logo-2.png'))
+
 @section('content')
    <!-- WISHLIST AREA START -->
    <div class="liton__wishlist-area mb-105">
