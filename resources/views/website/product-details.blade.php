@@ -6,7 +6,7 @@
 
 @section('keywords', $product->keywords)
 
-@section('image', $product->photos[0]->image_medium)
+@section('image', asset('storage/'.$product->photos[0]->image_medium))
 
 @section('bread', $product->name)
 
