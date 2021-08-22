@@ -175,3 +175,17 @@
 
 /*End Services Section*/
 
+
+/*Start Coupon Section*/
+
+.get-coupon{
+    position: absolute;
+    top: 17%;
+    left: 0;
+}
+
+@media  (max-width: 768px){
+    .get-coupon{
+        top: 27% ;
+    }
+}

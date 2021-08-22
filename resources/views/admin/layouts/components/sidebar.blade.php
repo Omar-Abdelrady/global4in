@@ -81,6 +81,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.store.coupons.index') }}" class="nav-link {{ Route::is('admin.store.coupons.*') ? 'active' : null }} ">
+                        <i class="fas fa-star nav-icon"></i>
+                        <p>الكوبونات</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.profile.index') }}" class="nav-link">
                         <i class="fas fa-user  nav-icon"></i>
                         الملف الشخصي

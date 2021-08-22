@@ -2,9 +2,9 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title> @yield('title') </title>
 <meta name="robots" content="noindex, follow"/>
-<meta name="description" content=" @yield('description') ">
-<meta name="keywords" content=" @yield('keywords') ">
-<meta name="og:image" content=" @yield('image') ">
+<meta name="description" content="@yield('description') ">
+<meta name="keywords" content="@yield('keywords') ">
+<meta name="og:image" content="@yield('img')">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Place favicon.png in the root directory -->

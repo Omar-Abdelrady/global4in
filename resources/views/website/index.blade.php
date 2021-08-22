@@ -212,252 +212,70 @@
                 </div>
             </div>
             <div class="row ltn__product-slider-item-four-active-full-width slick-arrow-1">
+                @foreach(\App\Models\Product::query()->latest()->take(4)->get() as $product)
                 <!-- ltn__product-item -->
                 <div class="col-lg-12">
-                    <div class="ltn__product-item ltn__product-item-4 text-center---">
+                    <div
+                        class="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---">
                         <div class="product-img">
-                            <a href="product-details.html"><img
-                                    src="{{ asset('assets/front-assets/img/product/unnamed.jpg') }}" alt="#"></a>
-                            <div class="product-badge">
-                                <ul>
-                                    <li class="sale-badge bg-hidden">
-                                        <i class="far fa-heart ltn__secondary-color"></i>
-                                    </li>
-                                    <li class="sale-badge bg-green">تكييف خلية شمسية</li>
-                                </ul>
+                            <a href="{{ route('product.index', $product->slug) }}">
+                                <img
+                                    class="w-100"
+                                    src="{{ asset('storage/'. $product->photos[0]->image_medium) }}"
+                                    alt="{{ $product->name }}">
+                            </a>
+                            <div class="real-estate-agent">
+                                <div class="agent-img">
+                                    @if($product->discount != 0)
+                                        <a href="{{ route('product.index', $product->slug) }}"
+                                           class="disount-class">
+                                            {{ $product->discount . '%' }}
+                                        </a>
+                                    @endif
+                                </div>
                             </div>
-                            <!--                            <div class="product-img-location-gallery">-->
-                            <!--                                <div class="product-img-location">-->
-                            <!--                                    <ul>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="locations.html"><i class="flaticon-pin"></i> الرياض</a>-->
-                            <!--                                        </li>-->
-                            <!--                                    </ul>-->
-                            <!--                                </div>-->
-                            <!--                                <div class="product-img-gallery">-->
-                            <!--                                    <ul>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="product-details.html"><i class="fas fa-camera"></i> 4</a>-->
-                            <!--                                        </li>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="product-details.html"><i class="fas fa-film"></i> 2</a>-->
-                            <!--                                        </li>-->
-                            <!--                                    </ul>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
                         </div>
                         <div class="product-info">
-                            <div class="product-price">
-                                <span>ريال 3000 </span>
-                            </div>
-                            <h2 class="product-title"><a href="product-details.html">تكييف 3 حصان بالخلية الشمسية</a>
+                            <h2 class="product-title">
+                                <a href="{{ route('product.index', $product->slug) }}">
+                                    {{ $product->name }}
+                                </a>
                             </h2>
-                            <div class="product-description">
-                                <p>وريم إيبسوم جزر معزز الخصومات. النوم والألم؟ل<br>
-                                    وريم إيبسوم جزر معزز الخصومات. النوم والألم؟</p>
+                            <ul class="ltn__list-item-2--- ltn__list-item-2-before--- ltn__plot-brief">
+                                <p>
+                                    {{ $product->sub_description }}
+                                </p>
+                            </ul>
+                            <div class="product-hover-action">
+                                <ul>
+                                    <li>
+                                        <a href="{{ route('store.wishlist.add', $product->slug) }}" title="Wishlist" data-toggle="modal"
+                                           data-target="#liton_wishlist_modal">
+                                            <i class="flaticon-heart-1"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('product.index', $product->slug) }}"
+                                           title="Product Details">
+                                            <i class="flaticon-add"></i>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-
+                        <div class="product-info-bottom">
+                            <div class="product-price">
+                                <span class="{{ $product->discount != 0 ? 'text-line-through text-gray-dark': null }}">ريال{{ $product->price }}<label></label></span>
+                            </div>
+                            @if($product->discount != 0)
+                                <div class="product-price ">
+                                    <span>ريال{{ $product->price - ( $product->price * ($product->discount / 100) ) }}<label></label></span>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <!-- ltn__product-item -->
-                <!-- ltn__product-item -->
-                <div class="col-lg-12">
-                    <div class="ltn__product-item ltn__product-item-4 text-center---">
-                        <div class="product-img">
-                            <a href="product-details.html"><img
-                                    src="{{ asset('assets/front-assets/img/product/unnamed.jpg') }}" alt="#"></a>
-                            <div class="product-badge">
-                                <ul>
-                                    <li class="sale-badge bg-hidden">
-                                        <i class="far fa-heart ltn__secondary-color"></i>
-                                    </li>
-                                    <li class="sale-badge bg-green">تكييف خلية شمسية</li>
-                                </ul>
-                            </div>
-                            <!--                            <div class="product-img-location-gallery">-->
-                            <!--                                <div class="product-img-location">-->
-                            <!--                                    <ul>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="locations.html"><i class="flaticon-pin"></i> الرياض</a>-->
-                            <!--                                        </li>-->
-                            <!--                                    </ul>-->
-                            <!--                                </div>-->
-                            <!--                                <div class="product-img-gallery">-->
-                            <!--                                    <ul>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="product-details.html"><i class="fas fa-camera"></i> 4</a>-->
-                            <!--                                        </li>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="product-details.html"><i class="fas fa-film"></i> 2</a>-->
-                            <!--                                        </li>-->
-                            <!--                                    </ul>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                        </div>
-                        <div class="product-info">
-                            <div class="product-price">
-                                <span>ريال 3000 </span>
-                            </div>
-                            <h2 class="product-title"><a href="product-details.html">تكييف 3 حصان بالخلية الشمسية</a>
-                            </h2>
-                            <div class="product-description">
-                                <p>وريم إيبسوم جزر معزز الخصومات. النوم والألم؟ل<br>
-                                    وريم إيبسوم جزر معزز الخصومات. النوم والألم؟</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- ltn__product-item -->
-                <!-- ltn__product-item -->
-                <div class="col-lg-12">
-                    <div class="ltn__product-item ltn__product-item-4 text-center---">
-                        <div class="product-img">
-                            <a href="product-details.html"><img
-                                    src="{{ asset('assets/front-assets/img/product/unnamed.jpg') }}" alt="#"></a>
-                            <div class="product-badge">
-                                <ul>
-                                    <li class="sale-badge bg-hidden">
-                                        <i class="far fa-heart ltn__secondary-color"></i>
-                                    </li>
-                                    <li class="sale-badge bg-green">تكييف خلية شمسية</li>
-                                </ul>
-                            </div>
-                            <!--                            <div class="product-img-location-gallery">-->
-                            <!--                                <div class="product-img-location">-->
-                            <!--                                    <ul>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="locations.html"><i class="flaticon-pin"></i> الرياض</a>-->
-                            <!--                                        </li>-->
-                            <!--                                    </ul>-->
-                            <!--                                </div>-->
-                            <!--                                <div class="product-img-gallery">-->
-                            <!--                                    <ul>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="product-details.html"><i class="fas fa-camera"></i> 4</a>-->
-                            <!--                                        </li>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="product-details.html"><i class="fas fa-film"></i> 2</a>-->
-                            <!--                                        </li>-->
-                            <!--                                    </ul>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                        </div>
-                        <div class="product-info">
-                            <div class="product-price">
-                                <span>ريال 3000 </span>
-                            </div>
-                            <h2 class="product-title"><a href="product-details.html">تكييف 3 حصان بالخلية الشمسية</a>
-                            </h2>
-                            <div class="product-description">
-                                <p>وريم إيبسوم جزر معزز الخصومات. النوم والألم؟ل<br>
-                                    وريم إيبسوم جزر معزز الخصومات. النوم والألم؟</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- ltn__product-item -->
-                <!-- ltn__product-item -->
-                <div class="col-lg-12">
-                    <div class="ltn__product-item ltn__product-item-4 text-center---">
-                        <div class="product-img">
-                            <a href="product-details.html"><img
-                                    src="{{ asset('assets/front-assets/img/product/unnamed.jpg') }}" alt="#"></a>
-                            <div class="product-badge">
-                                <ul>
-                                    <li class="sale-badge bg-hidden">
-                                        <i class="far fa-heart ltn__secondary-color"></i>
-                                    </li>
-                                    <li class="sale-badge bg-green">تكييف خلية شمسية</li>
-                                </ul>
-                            </div>
-                            <!--                            <div class="product-img-location-gallery">-->
-                            <!--                                <div class="product-img-location">-->
-                            <!--                                    <ul>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="locations.html"><i class="flaticon-pin"></i> الرياض</a>-->
-                            <!--                                        </li>-->
-                            <!--                                    </ul>-->
-                            <!--                                </div>-->
-                            <!--                                <div class="product-img-gallery">-->
-                            <!--                                    <ul>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="product-details.html"><i class="fas fa-camera"></i> 4</a>-->
-                            <!--                                        </li>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="product-details.html"><i class="fas fa-film"></i> 2</a>-->
-                            <!--                                        </li>-->
-                            <!--                                    </ul>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                        </div>
-                        <div class="product-info">
-                            <div class="product-price">
-                                <span>ريال 3000 </span>
-                            </div>
-                            <h2 class="product-title"><a href="product-details.html">تكييف 3 حصان بالخلية الشمسية</a>
-                            </h2>
-                            <div class="product-description">
-                                <p>وريم إيبسوم جزر معزز الخصومات. النوم والألم؟ل<br>
-                                    وريم إيبسوم جزر معزز الخصومات. النوم والألم؟</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- ltn__product-item -->
-                <!-- ltn__product-item -->
-                <div class="col-lg-12">
-                    <div class="ltn__product-item ltn__product-item-4 text-center---">
-                        <div class="product-img">
-                            <a href="product-details.html"><img
-                                    src="{{ asset('assets/front-assets/img/product/unnamed.jpg') }}" alt="#"></a>
-                            <div class="product-badge">
-                                <ul>
-                                    <li class="sale-badge bg-hidden">
-                                        <i class="far fa-heart ltn__secondary-color"></i>
-                                    </li>
-                                    <li class="sale-badge bg-green">تكييف خلية شمسية</li>
-                                </ul>
-                            </div>
-                            <!--                            <div class="product-img-location-gallery">-->
-                            <!--                                <div class="product-img-location">-->
-                            <!--                                    <ul>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="locations.html"><i class="flaticon-pin"></i> الرياض</a>-->
-                            <!--                                        </li>-->
-                            <!--                                    </ul>-->
-                            <!--                                </div>-->
-                            <!--                                <div class="product-img-gallery">-->
-                            <!--                                    <ul>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="product-details.html"><i class="fas fa-camera"></i> 4</a>-->
-                            <!--                                        </li>-->
-                            <!--                                        <li>-->
-                            <!--                                            <a href="product-details.html"><i class="fas fa-film"></i> 2</a>-->
-                            <!--                                        </li>-->
-                            <!--                                    </ul>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                        </div>
-                        <div class="product-info">
-                            <div class="product-price">
-                                <span>ريال 3000 </span>
-                            </div>
-                            <h2 class="product-title"><a href="product-details.html">تكييف 3 حصان بالخلية الشمسية</a>
-                            </h2>
-                            <div class="product-description">
-                                <p>وريم إيبسوم جزر معزز الخصومات. النوم والألم؟ل<br>
-                                    وريم إيبسوم جزر معزز الخصومات. النوم والألم؟</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- ltn__product-item -->
-
+                @endforeach
             </div>
         </div>
     </div>
@@ -539,6 +357,7 @@
 
                             <li>
                                 <a href="shop.html" class="theme-btn-1 btn btn-effect-1" tabindex="0">اشتراك</a>
+                                <a href="{{ route('coupon.index') }}" class="theme-btn-2 btn btn-effect-2" tabindex="0">الكوبونات</a>
                             </li>
                         </ul>
 

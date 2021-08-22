@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Store;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderShipped;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
@@ -74,6 +75,11 @@ class PaymentController extends Controller
                     'order_id' => $order->id
                 ]);
             }
+            $deteils = [
+                'username' => auth()->guard('web')->user()->first_name. ' '. auth()->guard('web')->user()->last_name,
+                'order_id' => $order->id
+            ];
+            \Mail::to("omartestdev123@gmail.com")->send(new OrderShipped($deteils));
             session()->flash('success', 'تمت عملية الدفع بنجاح');
             \ShoppingCart::destroy();
             \ShoppingCart::clean();

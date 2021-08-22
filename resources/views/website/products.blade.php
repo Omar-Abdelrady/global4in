@@ -88,7 +88,7 @@
                                                     <div class="product-hover-action">
                                                         <ul>
                                                             <li>
-                                                                <a href="#" title="Wishlist" data-toggle="modal"
+                                                                <a href="{{ route('store.wishlist.add', $product->slug) }}" title="Wishlist" data-toggle="modal"
                                                                    data-target="#liton_wishlist_modal">
                                                                     <i class="flaticon-heart-1"></i></a>
                                                             </li>

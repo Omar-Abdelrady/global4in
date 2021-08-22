@@ -32,7 +32,7 @@
                     </table>
                 </div>
                 <div class="col-12 d-flex justify-content-center my-2">
-                    {{ $orders->links() }}
+                    {!! $orders->links()  !!}
                 </div>
             </div>
         </div>

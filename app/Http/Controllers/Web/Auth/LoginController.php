@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use URL;
 
 class LoginController extends Controller
 {
@@ -14,6 +15,10 @@ class LoginController extends Controller
     }
     public function login()
     {
+        if(!session()->has('url.intended'))
+        {
+            session(['url.intended' => url()->previous()]);
+        }
         return view('website.login_1');
     }
     public function submit(Request $request)
@@ -30,7 +35,7 @@ class LoginController extends Controller
         if ($user)
         {
             if (\Auth::guard('web')->attempt($data, $request->has('remember') ? true : null)){
-                return redirect()->route('index');
+                return redirect(session()->get('url.intended'));
             }else{
                 session()->flash('error', 'عذرا يجب التأكد من كلمة السر');
                 return back();

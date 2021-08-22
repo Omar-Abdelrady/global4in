@@ -25,6 +25,9 @@ Route::get('store/search/', [\App\Http\Controllers\Web\Store\ProductController::
 Route::get('store/wishlist', [\App\Http\Controllers\Web\Store\WishlistController::class, 'index'])->name('store.wishlist');
 Route::get('store/wishlist/{slug}', [\App\Http\Controllers\Web\Store\WishlistController::class, 'add'])->name('store.wishlist.add');
 Route::get('store/wishlist/remove/{id}', [\App\Http\Controllers\Web\Store\WishlistController::class, 'remove'])->name('store.wishlist.remove');
+Route::get('coupons', [\App\Http\Controllers\Web\CouponController::class, 'index'])->name('coupon.index');
+Route::get('coupons/search/', [\App\Http\Controllers\Web\CouponController::class, 'search'])->name('coupon.search');
+
 Route::group(['middleware' => 'auth:web'], function () {
 //    Start Cart Routers
     Route::get('/my-cart', [\App\Http\Controllers\Web\Store\CartController::class, 'index'])->name('cart.index');
@@ -43,17 +46,13 @@ Route::group(['middleware' => 'auth:web'], function () {
 
 //    Start Evaluate Routers
     Route::post('/store/product/{slug}/evaluate', [\App\Http\Controllers\Web\Store\EvaluateController::class, 'store'])->name('product.evaluate');
+//    Start Get Coupon Route
+    Route::get('coupons/get/{id}', [\App\Http\Controllers\Web\CouponController::class, 'get'])->name('coupon.get');
 
 });
 
 Route::get('/admin', function () {
     return view('admin.index');
-});
-
-Route::group(['middleware' => 'auth:web'], function () {
-    Route::group(['as' => 'store.', 'name' => 'store', 'prefix' => 'store'], function () {
-        Route::post('/feedback/store', [\App\Http\Controllers\Web\Store\ProductFeedbackController::class, 'store'])->name('feedback.store');
-    });
 });
 
 
@@ -73,6 +72,7 @@ Route::group(['middleware' => 'auth:admin', 'as' => 'admin.', 'name' => 'admin',
         Route::resource('colors', \App\Http\Controllers\Admin\Store\ColorController::class)->parameters(['colors' => 'id']);
         Route::resource('products', \App\Http\Controllers\Admin\Store\ProductController::class)->parameters(['products' => 'slug']);
         Route::resource('orders', \App\Http\Controllers\Admin\Store\OrderController::class)->parameters(['orders' => 'id']);
+        Route::resource('coupons', \App\Http\Controllers\Admin\CouponController::class)->parameters(['orders' => 'id']);
     });
 
     Route::resource('/service', \App\Http\Controllers\Admin\ServiceController::class)->parameters(['service' => 'slug']);
