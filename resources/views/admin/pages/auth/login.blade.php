@@ -9,7 +9,7 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="container" style="height: 100vh">
             <div class="row justify-content-center align-content-center h-100">
-                <div class="col-6">
+                <div class="col-md-6 col-12">
                     @include('admin.components.errors')
                     @include('admin.components.flash session')
                     <form class="form-horizontal my-3" action="{{ route('admin.submit') }}" method="post">
@@ -38,7 +38,7 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="">
-                            <button type="submit" class="btn btn-info">Sign in</button>
+                            <button type="submit" class="btn btn-info">تسجيل دخول</button>
                         </div>
                         <!-- /.card-footer -->
                     </form>

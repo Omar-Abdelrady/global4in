@@ -20,6 +20,9 @@
             <p>
                 اسم الكوبون : {{ $details['coupon'] }}
             </p>
+            <p>
+                صالح حتى : {{ $details['exp_date'] }}
+            </p>
         </div>
     </div>
 </div>

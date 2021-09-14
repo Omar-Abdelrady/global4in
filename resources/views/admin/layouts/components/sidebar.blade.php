@@ -29,7 +29,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-                <li class="nav-item has-treeview menu-open">
+                <li class="nav-item has-treeview {{ Route::is('admin.store.*') ? 'active menu-open' : null }}">
                     <a href="#" class="nav-link {{ Route::is('admin.store.*') ? 'active' : null }} ">
                         <i class="nav-icon fas fa-store-alt"></i>
                         <p>
@@ -92,6 +92,52 @@
                         الملف الشخصي
                     </a>
                 </li>
+                <li class="nav-item has-treeview {{ Route::is('admin.estates.*') ? 'active menu-open' : null }}">
+                    <a href="#" class="nav-link {{ Route::is('admin.estates.*') ? 'active' : null }} ">
+                        <i class="nav-icon fas fa-store-alt"></i>
+                        <p>
+                            العقارات
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.estates.countries.index') }}"
+                               class="nav-link {{ Route::is('admin.estates.countries.*') ? 'active' : null }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>الدول</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.estates.agents.index') }}"
+                               class="nav-link {{ Route::is('admin.estates.agents.*') ? 'active' : null }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>الوكلاء</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.estates.citys.index') }}"
+                               class="nav-link {{ Route::is('admin.estates.citys.*') ? 'active' : null }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>المدن</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.estates.categories.index') }}"
+                               class="nav-link {{ Route::is('admin.estates.categories.*') ? 'active' : null }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>اقسام العقارات</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.estates.ads.index') }}"
+                               class="nav-link {{ Route::is('admin.estates.ads.*') ? 'active' : null }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>اعلانات العقارات</p>
+                            </a>
+                        </li>
+                    </ul>
+                <li class="nav-item">
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

@@ -16,14 +16,19 @@ class CreateAdsTable extends Migration
         Schema::create('ads', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug');
             $table->string('advertiser_name');
             $table->longText('description');
-
-
-
-            $table->integer('advertiser_number');
-            $table->integer('advertiser_email');
-
+            $table->string('price');
+            $table->string('space');
+            $table->longText('address');
+            $table->string('phone');
+            $table->string('second_phone');
+            $table->text('meridians');
+            $table->text('latitudes');
+            $table->integer('ad_status')->default('0')->comment('0:pending, 1:active, 2:not active, 3:report');
+            $table->integer('sale_or_rent')->comment('0:sale, 1:rent');
+            $table->string('advertiser_email');
             $table->timestamps();
         });
     }

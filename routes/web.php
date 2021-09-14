@@ -27,6 +27,9 @@ Route::get('store/wishlist/{slug}', [\App\Http\Controllers\Web\Store\WishlistCon
 Route::get('store/wishlist/remove/{id}', [\App\Http\Controllers\Web\Store\WishlistController::class, 'remove'])->name('store.wishlist.remove');
 Route::get('coupons', [\App\Http\Controllers\Web\CouponController::class, 'index'])->name('coupon.index');
 Route::get('coupons/search/', [\App\Http\Controllers\Web\CouponController::class, 'search'])->name('coupon.search');
+Route::get('/ads', [\App\Http\Controllers\Web\AdController::class, 'index'])->name('ads.index');
+Route::get('/ad/asd/{slug}', [\App\Http\Controllers\Web\AdController::class, 'show'])->name('ads.show');
+
 
 Route::group(['middleware' => 'auth:web'], function () {
 //    Start Cart Routers
@@ -48,6 +51,14 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::post('/store/product/{slug}/evaluate', [\App\Http\Controllers\Web\Store\EvaluateController::class, 'store'])->name('product.evaluate');
 //    Start Get Coupon Route
     Route::get('coupons/get/{id}', [\App\Http\Controllers\Web\CouponController::class, 'get'])->name('coupon.get');
+
+//    Start Routes of Ads
+    Route::get('ad/create', [\App\Http\Controllers\Web\AdController::class, 'create'])->name('ads.create');
+
+    Route::post('ad/create', [\App\Http\Controllers\Web\AdController::class, 'store'])->name('ads.store');
+
+//    get cities
+    Route::get('/cities/{id}', [\App\Http\Controllers\Web\AdController::class, 'getCities'])->name('ads.cities');
 
 });
 
@@ -76,6 +87,13 @@ Route::group(['middleware' => 'auth:admin', 'as' => 'admin.', 'name' => 'admin',
     });
 
     Route::resource('/service', \App\Http\Controllers\Admin\ServiceController::class)->parameters(['service' => 'slug']);
+    Route::group(['as' => 'estates.', 'name' => 'admin', 'prefix' => '/estate'], function () {
+        Route::resource('/citys', \App\Http\Controllers\Admin\Estate\CityController::class)->parameters(['citys' => 'id']);
+        Route::resource('/categories', \App\Http\Controllers\Admin\Estate\CategoryController::class)->parameters(['categories' => 'id']);
+        Route::resource('/countries', \App\Http\Controllers\Admin\Estate\CountryControoler::class)->parameters(['countries' => 'id']);
+        Route::resource('/ads', \App\Http\Controllers\Admin\Estate\AdController::class)->parameters(['ads' => 'id']);
+        Route::resource('/agents', \App\Http\Controllers\Admin\Estate\AgentController::class)->parameters(['agents' => 'id']);
+    });
 
     Route::group(['as' => 'profile', 'prefix' => 'profile', 'name' => 'profile'], function () {
         Route::get('/index', [\App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('.index');

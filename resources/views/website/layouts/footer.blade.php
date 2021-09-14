@@ -28,7 +28,7 @@
                     <div class="footer-widget footer-about-widget">
                         <div class="footer-logo">
                             <div class="site-logo">
-                                <img src="img/logo-33.png" alt="Logo">
+                                <img src="{{ asset('assets/front-assets/img/logo-33.png') }}" alt="Logo">
                             </div>
                         </div>
                         <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على

@@ -16,6 +16,8 @@ class CreateAdPhotosTable extends Migration
         Schema::create('ad_photos', function (Blueprint $table) {
             $table->id();
             $table->string('image');
+            $table->string('image_avatar');
+            $table->string('image_medium');
 
             $table->unsignedBigInteger('ad_id');
             $table->foreign('ad_id')->references('id')->on('ads')->cascadeOnDelete();

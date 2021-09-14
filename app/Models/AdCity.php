@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AdCategory extends Model
+class AdCity extends Model
 {
     use HasFactory;
     protected $guarded;
@@ -13,5 +13,10 @@ class AdCategory extends Model
     public function ads()
     {
         return $this->hasMany(Ad::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
     }
 }

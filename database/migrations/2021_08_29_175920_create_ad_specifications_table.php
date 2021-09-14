@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePivotAdStatusesTable extends Migration
+class CreateAdSpecificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreatePivotAdStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pivot_ad_statuses', function (Blueprint $table) {
+        Schema::create('ad_specifications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ad_id');
-            $table->unsignedBigInteger('status_id');
+            $table->string('key');
+            $table->string('value');
 
+            $table->unsignedBigInteger('ad_id');
             $table->foreign('ad_id')->references('id')->on('ads')->cascadeOnDelete();
-            $table->foreign('status_id')->references('id')->on('ad_statuses')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreatePivotAdStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pivot_ad_statuses');
+        Schema::dropIfExists('ad_specifications');
     }
 }

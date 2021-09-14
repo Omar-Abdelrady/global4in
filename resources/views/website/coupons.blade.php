@@ -24,7 +24,7 @@
                                         <div class="ltn__search-widget mb-30">
                                             <form action="{{ route('coupon.search') }}" method="get">
                                                 @csrf
-                                                <input type="text" name="search" placeholder="بحث">
+                                                <input type="text" name="search" placeholder="بحث" required>
                                                 <button type="submit"><i class="fas fa-search"></i></button>
                                             </form>
                                         </div>
