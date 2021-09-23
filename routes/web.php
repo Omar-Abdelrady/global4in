@@ -30,7 +30,7 @@ Route::get('coupons/search/', [\App\Http\Controllers\Web\CouponController::class
 Route::get('/ads', [\App\Http\Controllers\Web\AdController::class, 'index'])->name('ads.index');
 Route::get('/ad/asd/{slug}', [\App\Http\Controllers\Web\AdController::class, 'show'])->name('ads.show');
 
-
+Route::get('/cities/{id}', [\App\Http\Controllers\Web\AdController::class, 'getCities'])->name('ads.cities')->middleware('web', 'auth:admin');
 Route::group(['middleware' => 'auth:web'], function () {
 //    Start Cart Routers
     Route::get('/my-cart', [\App\Http\Controllers\Web\Store\CartController::class, 'index'])->name('cart.index');
@@ -58,7 +58,7 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::post('ad/create', [\App\Http\Controllers\Web\AdController::class, 'store'])->name('ads.store');
 
 //    get cities
-    Route::get('/cities/{id}', [\App\Http\Controllers\Web\AdController::class, 'getCities'])->name('ads.cities');
+
 
 });
 

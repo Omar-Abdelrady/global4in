@@ -7,9 +7,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <a href="" class="my-2 btn btn-success">اضافى</a>
-                </div>
-                <div class="col-12">
                     <form action="{{ isset($agent) ? route('admin.estates.agents.update', $agent->id) : route('admin.estates.agents.store') }}" method="post">
                         @csrf
                         @if(isset($agent))

@@ -23,6 +23,26 @@ class CreateAdRequest extends FormRequest
      */
     public function rules()
     {
+        if (request()->_method == 'PUT') {
+            return [
+                'title' => "required|max:200|unique:ads,title,$this->id",
+                'advertiser_name' => 'required|max:200',
+                'description' => 'required',
+                'price' => 'required|max:200',
+                'space' => 'required|max:200',
+                'address' => 'required',
+                'phone' => 'required|max:200',
+                'second_phone' => 'required|max:200',
+//            'meridians' => 'required',
+//            'latitudes' => 'required',
+                'sale_or_rent' => 'required',
+                'advertiser_email' => 'required',
+                'category_id' => 'required',
+                'ad_agent_id' => 'required',
+                'city_id' => 'required'
+            ];
+        }
+
         return [
             'title' => 'required|max:200',
             'advertiser_name' => 'required|max:200',
@@ -36,7 +56,8 @@ class CreateAdRequest extends FormRequest
 //            'latitudes' => 'required',
             'sale_or_rent' => 'required',
             'advertiser_email' => 'required',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'city_id' => 'required'
         ];
     }
 
@@ -63,6 +84,8 @@ class CreateAdRequest extends FormRequest
             'advertiser_email.required' => 'عذرا يرجي البريد الالكتروني مطلوب',
             'advertiser_email.max' => 'عذرا اقصى حد للبريد الالكتروني هو 200 حرف',
             'category_id.required' => 'عذرا يرجي اختيار القسم الخاص بالاعلان',
+            'ad_agent_id.required' => 'عذرا يرجي اختيار وكيل الاعلان',
+            'city_id.required' => 'يرجي اختيار المدينة'
         ];
     }
 }

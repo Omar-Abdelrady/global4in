@@ -32,10 +32,10 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="input-item input-item-textarea ltn__custom-icon">
-                                                <input value="{{ old('title') }}" type="text" name="title" placeholder="*العنوان" required>
+                                                <input value="{{ old('title') }}" type="text" name="title" placeholder="*العنوان" >
                                             </div>
                                             <div class="input-item input-item-textarea ltn__custom-icon">
-                                                <textarea name="description" placeholder="الوصف" required>{{ old('description') }}</textarea>
+                                                <textarea name="description" placeholder="الوصف" >{{ old('description') }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -43,13 +43,13 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="input-item  input-item-textarea ltn__custom-icon">
-                                                <input value="{{ old('price') }}" type="text" name="price" placeholder="السعر" required>
+                                                <input value="{{ old('price') }}" type="text" name="price" placeholder="السعر" >
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="input-item input-item-textarea ltn__custom-icon">
-                                                <input value="{{ old('space') }}" type="text" name="space" placeholder="المساحة" required>
+                                                <input value="{{ old('space') }}" type="text" name="space" placeholder="المساحة" >
                                             </div>
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                     <div class="row">
                                         <div class="col-12 col-md-6">
                                             <div class="input-item">
-                                                <select name="category_id" class="nice-select" required>
+                                                <select name="category_id" class="nice-select" >
                                                     <option selected value>اختر نوع العقار</option>
                                                     @foreach($categories as $item)
                                                         <option {{ old('ad_category_id') == $item->id ? 'selected': null }} value="{{ $item->id }}">{{ $item->name }}</option>
@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <div class="input-item">
-                                                <select name="sale_or_rent" class="nice-select" required>
+                                                <select name="sale_or_rent" class="nice-select" >
                                                     <option selected value>اختر حالة العقار</option>
                                                     <option {{ old('sale_or_rent') == 0 ? 'selected' : null }} value="0" >للبيع</option>
                                                     <option {{ old('sale_or_rent') == 1 ? 'selected' : null }} value="1">للإجار</option>
@@ -84,7 +84,7 @@
                             <div class="tab-pane fade" id="liton_tab_3_2">
                                 <div class="ltn__product-tab-content-inner">
                                     <h6>الميديا</h6>
-                                    <input type="file" multiple id="myFile" name="images[]" class="btn theme-btn-3 mb-10" required><br>
+                                    <input type="file" multiple id="myFile" name="images[]" class="btn theme-btn-3 mb-10" ><br>
                                     <p>
                                         <small>* الصورة تكون بحجم 500 * 500</small><br>
                                         <small>* PDF or png Or jpg</small><br>
@@ -105,12 +105,12 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="input-item input-item-textarea ltn__custom-icon">
-                                                <input value="{{ old('address') }}" type="text" name="address" placeholder="*العوان" required>
+                                                <input value="{{ old('address') }}" type="text" name="address" placeholder="*العوان" >
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="input-item">
-                                                    <select class="nice-select" id="country_id" required>
+                                                    <select class="nice-select" id="country_id" >
                                                         <option selected value>اختر الدولة</option>
                                                         @foreach($countries as $item)
                                                             <option {{ old('city') == $item->id ? 'selected' : null }} value="{{ $item->id }}">{{ $item->name }}</option>
@@ -120,7 +120,7 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="input-item d-none content-cities">
-                                                <select class="nice-select" name="city_id" id="cities" required>
+                                                <select class="nice-select" name="city_id" id="cities" >
                                                     <option selected value>اختر المدينة</option>
                                                 </select>
                                             </div>
@@ -149,22 +149,22 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="input-item input-item-textarea ltn__custom-icon">
-                                                <input value="{{ old('advertiser_name') }}" type="text" name="advertiser_name" placeholder="اسم المعلن" required>
+                                                <input value="{{ old('advertiser_name') }}" type="text" name="advertiser_name" placeholder="اسم المعلن" >
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="input-item input-item-textarea ltn__custom-icon">
-                                                <input type="text" name="phone" value="{{ old('phone') }}" placeholder="رقم الهاتف" required>
+                                                <input type="text" name="phone" value="{{ old('phone') }}" placeholder="رقم الهاتف" >
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="input-item input-item-textarea ltn__custom-icon">
-                                                <input type="text" name="second_phone" value="{{ old('second_phone') }}" placeholder="رقم هاتف بديل" required>
+                                                <input type="text" name="second_phone" value="{{ old('second_phone') }}" placeholder="رقم هاتف بديل" >
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="input-item input-item-textarea ltn__custom-icon">
-                                                <input value="{{ old('advertiser_email') }}" type="text" name="advertiser_email" placeholder="البريد الاليكترونى)" required>
+                                                <input value="{{ old('advertiser_email') }}" type="text" name="advertiser_email" placeholder="البريد الاليكترونى)" >
                                             </div>
                                         </div>
                                     </div>
