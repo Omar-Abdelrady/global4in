@@ -22,6 +22,7 @@ class AdController extends Controller
         return view('website.ads', compact('categories', 'cytis', 'ads'));
     }
 
+
     public function create()
     {
         $categories = AdCategory::query()->get();
@@ -76,15 +77,40 @@ class AdController extends Controller
         return redirect()->route('ads.index');
 
     }
-    public function show($slug)
-    {
-        dd('asd');
-    }
 
     public function getCities($id)
     {
         $cities = Country::query()->findOrFail($id)->cities;
         return response()->json($cities, 200);
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->category_id !== null)
+        {
+            $ads = Ad::query()->whereHas('category', function ($query) use ($request){
+                $query->where('id', $request->category_id);
+            });
+        }
+        if ($request->sale_or_rent !== null)
+        {
+            $ads->where('sale_or_rent', '=', $request->sale_or_rent);
+        }
+
+        if ($request->city_id !== null)
+        {
+            $ads->where('city_id', $request->city_id);
+        }
+
+        $ads->where('title', 'LIKE', "%{$request->search}%")->where('ad_status', '=', 1)->paginate(10);
+
+        dd($ads);
+        return view('website.ads',compact('ads'))->with(['sale_or_rent' => $request->sale_or_rent, 'category_id' => $request->category_id, 'search' => $request->search, 'city_id', $request->city_id, 'country_id'=> $request->country_id]);
+    }
+
+    public function show($slug)
+    {
+        dd('asd');
     }
 
 }

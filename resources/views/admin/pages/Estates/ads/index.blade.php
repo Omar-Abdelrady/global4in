@@ -23,7 +23,7 @@
                                 <td>{{ $item->title }}</td>
                                 <td>
                                     @if($item->ad_status == 0)
-                                       <span class="text-danger">معلق</span>
+                                        <span class="text-danger">معلق</span>
                                     @elseif($item->ad_status == 1)
                                         <span class="text-success">مفعل</span>
                                     @elseif($item->ad_status == 2)
@@ -32,13 +32,22 @@
 
                                 </td>
                                 <td class="d-flex">
-                                    <a href="{{ route('admin.estates.ads.show', $item->id) }}" class="btn btn-info">عرض</a>
-                                    <a href="{{ route('admin.estates.ads.edit', $item->id) }}" class="btn btn-secondary mx-2">تعديل</a>
-                                    <form action="{{ route('admin.estates.ads.destroy', $item->id) }}">
+                                    <a href="{{ route('admin.estates.ads.show', $item->id) }}"
+                                       class="btn btn-info">عرض</a>
+                                    <a href="{{ route('admin.estates.ads.edit', $item->id) }}"
+                                       class="btn btn-secondary mx-2">تعديل</a>
+                                    <form action="{{ route('admin.estates.ads.destroy', $item->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger">حذف</button>
                                     </form>
+                                    <a href="{{ route('admin.estates.ads.status', $item->id) }}" class="btn btn-dark mx-2">
+                                        @if($item->ad_status == 0)
+                                            تفعيل
+                                        @elseif($item->ad_status == 1)
+                                            الغاء التفعيل
+                                        @endif
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach

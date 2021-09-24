@@ -37,4 +37,10 @@ class Ad extends Model
         return $this->hasMany(AdSpecification::class);
     }
 
+    public function getAdofCategory($id)
+    {
+        dd($id);
+        return AdCategory::query()->findOrFail($id)->ads;
+    }
+
 }

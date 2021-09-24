@@ -28,7 +28,8 @@ Route::get('store/wishlist/remove/{id}', [\App\Http\Controllers\Web\Store\Wishli
 Route::get('coupons', [\App\Http\Controllers\Web\CouponController::class, 'index'])->name('coupon.index');
 Route::get('coupons/search/', [\App\Http\Controllers\Web\CouponController::class, 'search'])->name('coupon.search');
 Route::get('/ads', [\App\Http\Controllers\Web\AdController::class, 'index'])->name('ads.index');
-Route::get('/ad/asd/{slug}', [\App\Http\Controllers\Web\AdController::class, 'show'])->name('ads.show');
+Route::get('/ad/search/', [\App\Http\Controllers\Web\AdController::class, 'search'])->name('ads.search');
+Route::get('/ads/{slug}', [\App\Http\Controllers\Web\AdController::class, 'show'])->name('ads.show');
 
 Route::get('/cities/{id}', [\App\Http\Controllers\Web\AdController::class, 'getCities'])->name('ads.cities')->middleware('web', 'auth:admin');
 Route::group(['middleware' => 'auth:web'], function () {
@@ -92,6 +93,7 @@ Route::group(['middleware' => 'auth:admin', 'as' => 'admin.', 'name' => 'admin',
         Route::resource('/categories', \App\Http\Controllers\Admin\Estate\CategoryController::class)->parameters(['categories' => 'id']);
         Route::resource('/countries', \App\Http\Controllers\Admin\Estate\CountryControoler::class)->parameters(['countries' => 'id']);
         Route::resource('/ads', \App\Http\Controllers\Admin\Estate\AdController::class)->parameters(['ads' => 'id']);
+        Route::get('/ads/status/{id}', [\App\Http\Controllers\Admin\Estate\AdController::class, 'status'])->name('ads.status');
         Route::resource('/agents', \App\Http\Controllers\Admin\Estate\AgentController::class)->parameters(['agents' => 'id']);
     });
 

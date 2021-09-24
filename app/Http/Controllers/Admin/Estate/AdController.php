@@ -34,14 +34,23 @@ class AdController extends Controller
      */
     public function create()
     {
-        $table->unsignedBigInteger('city_id');
-        $table->foreign('city_id')->references('id')->on('ad_cities')->cascadeOnDelete();
 
-        $table->unsignedBigInteger('user_id');
-        $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+    }
 
-        $table->unsignedBigInteger('category_id');
-        $table->foreign('category_id')->references('id')->on('ad_categories')->cascadeOnDelete();
+    public function status($id)
+    {
+        $ad = Ad::query()->findOrFail($id);
+        if ($ad->ad_status == 0)
+        {
+            $ad->ad_status = 1;
+            $ad->save();
+            session()->flash('success', 'تم تفعيل الاعلان بنجاح');
+            return back();
+        }
+        $ad->ad_status = 0;
+        $ad->save();
+        session()->flash('success', 'تم الغاء تفعيل الاعلان بنجاح');
+        return back();
     }
 
     /**
@@ -75,7 +84,7 @@ class AdController extends Controller
      */
     public function edit($id)
     {
-        $ad = Ad::query()->findOrFail($id)->with('photos')->first();
+        $ad = Ad::query()->findOrFail($id);
         $categories = AdCategory::query()->get();
         $countries = Country::query()->get();
         return view('admin.pages.Estates.ads.edit', compact('ad', 'categories', 'countries'));
@@ -167,6 +176,15 @@ class AdController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd('da');
+        $ad = Ad::query()->findOrFail($id);
+        foreach ($ad->photos as $photo) {
+            Storage::delete('/public/' . $photo->image_avatar);
+            Storage::delete('/public/' . $photo->image_medium);
+            Storage::delete('/public/' . $photo->image);
+        }
+        $ad->delete();
+        session()->flash('success', 'تم حذف الاعلان بنجاح');
+        return back();
     }
 }
